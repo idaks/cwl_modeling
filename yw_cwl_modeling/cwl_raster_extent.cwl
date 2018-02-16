@@ -16,11 +16,6 @@ inputs:
    inputBinding:
     position: 2
 
-  outfile: 
-   type: string
-   inputBinding:
-    position: 5
-
 outputs:
   out:
     type: stdout
