@@ -4,9 +4,6 @@ label: Find reads with predicted coding sequences above 60 AA in length
 
 requirements:
  ScatterFeatureRequirement: {}
- SchemaDefRequirement:
-   types: 
-     - $import: ../tools/FragGeneScan-model.yaml
 
 inputs:
   sequence:
