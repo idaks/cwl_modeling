@@ -15,6 +15,8 @@ dir_name = args[1]
  
 ext_dir = paste0(paste0(args[2],'/'),paste0(args[2],'_tracts'))
 
+#ext_dir = args[2]
+
 file_name = paste0(paste0(ext_dir,'/'),args[3])
 
 

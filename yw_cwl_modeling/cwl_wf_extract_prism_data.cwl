@@ -19,14 +19,17 @@ inputs:
    inputBinding:
     position: 3
 
+  itrdb_rds:
+    type: string
+
 outputs:
-  classout:
+  ext_dir:
     type: File
-    outputSource: unzip/out
+    outputSource: ext_itrdb_data/itrdb_data
 
 
 steps:
-  dwl_data:
+  dwl_Feddata:
     run: cwl_dwl_FedData.cwl
     in:
       dir: dir
@@ -39,5 +42,14 @@ steps:
     in:
       dir: dir
       study_region: study_region
-      file_name: dwl_data/out
+      file_name: dwl_Feddata/out
     out: [out]
+
+  ext_itrdb_data:
+    run: cwl_ext_itrdb_data.cwl
+    in:
+      dir: dir
+      study_region: study_region
+      file_name: unzip/out
+      itrdb_rds: itrdb_rds
+    out: [itrdb_data]

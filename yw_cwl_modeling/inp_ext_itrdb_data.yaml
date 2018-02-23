@@ -1,3 +1,6 @@
 dir: "/Users/pratikshrivastava/Desktop/Box/GitHub/cwl_modeling/yw_cwl_modeling/"
-study_region: 'GRCA'
+study_region: "GRCA"
+file_name: 
+  class: File 
+  path: "GRCA_tracts"
 itrdb_rds: itrdb.Rda

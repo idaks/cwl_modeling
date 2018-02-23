@@ -16,4 +16,8 @@ file_name = paste0(paste0(args[2],'/'),args[3])
 
 ext_dir = paste0(paste0(args[2],'/'),paste0(args[2],'_tracts'))
 
+
+print(file_name)
+print(dir_name)
+
 utils::unzip(file_name, exdir=ext_dir)

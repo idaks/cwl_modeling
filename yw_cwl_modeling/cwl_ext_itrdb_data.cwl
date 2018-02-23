@@ -5,7 +5,6 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 inputs:
-
   dir: 
    type: string
    inputBinding:
@@ -20,12 +19,15 @@ inputs:
    type: string
    inputBinding:
     position: 3
+  
+  file_name:
+    type: File
 
 outputs:
-  out:
+  itrdb_data:
     type: File
     outputBinding:
-      glob: $(inputs.study_region)/$(inputs.itrdb_rds)
+      glob: $(inputs.itrdb_rds)
 
 baseCommand: [Rscript,/Users/pratikshrivastava/Desktop/Box/GitHub/cwl_modeling/yw_cwl_modeling/Rscript/ext_itrdb_data.R]
-stdout: $(inputs.study_region)/$(inputs.itrdb_rds)
+stdout: $(inputs.itrdb_rds)
