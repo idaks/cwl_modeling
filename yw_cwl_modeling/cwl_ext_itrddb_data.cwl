@@ -16,7 +16,7 @@ inputs:
    inputBinding:
     position: 2
 
-  url: 
+  itrdb_rds: 
    type: string
    inputBinding:
     position: 3
@@ -25,7 +25,7 @@ outputs:
   out:
     type: File
     outputBinding:
-      glob: $(inputs.study_region)/$(inputs.study_region)_tracts.zip
+      glob: $(inputs.study_region)/$(inputs.itrdb_rds)
 
-baseCommand: [Rscript,/Users/pratikshrivastava/Desktop/Box/GitHub/cwl_modeling/yw_cwl_modeling/Rscript/dwl_FedData.R]
-stdout: $(inputs.study_region)/$(inputs.study_region)_tracts.zip
+baseCommand: [Rscript,/Users/pratikshrivastava/Desktop/Box/GitHub/cwl_modeling/yw_cwl_modeling/Rscript/ext_itrdb_data.R]
+stdout: $(inputs.study_region)/$(inputs.itrdb_rds)

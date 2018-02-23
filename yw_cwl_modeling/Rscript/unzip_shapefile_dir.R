@@ -9,12 +9,11 @@ args <- commandArgs(trailingOnly = TRUE)
 
 setwd(args[1])
 
-dir_name = paste0(paste0('./',args[2]),'/') 
 
-print(dir_name)
+dir_name = args[1]
 
-file_name=paste0(args[2],'_tracts.zip')
+file_name = paste0(paste0(args[2],'/'),args[3])
 
-print(file_name)
+ext_dir = paste0(paste0(args[2],'/'),paste0(args[2],'_tracts'))
 
-utils::unzip(paste0(dir_name,file_name), exdir=paste0(dir_name,"/grca_tracts"))
+utils::unzip(file_name, exdir=ext_dir)

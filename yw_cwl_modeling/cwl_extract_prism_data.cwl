@@ -4,6 +4,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+requirements:
+  - class: InlineJavascriptRequirement
+
 inputs:
 
   dir: 
@@ -43,3 +46,4 @@ outputs:
       glob: $(inputs.outdir)/$(inputs.outfile)
 
 baseCommand: [Rscript,/Users/pratikshrivastava/Desktop/Box/GitHub/cwl_modeling/yw_cwl_modeling/Rscript/extract_prism_data.R]
+stdout: $(inputs.outdir)/$(inputs.outfile)
