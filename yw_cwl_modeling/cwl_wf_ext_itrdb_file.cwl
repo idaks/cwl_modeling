@@ -23,7 +23,7 @@ inputs:
     type: string
 
 outputs:
-  ext_dir:
+  itrdb.Rda:
     type: File
     outputSource: ext_itrdb_data/itrdb_data
 
