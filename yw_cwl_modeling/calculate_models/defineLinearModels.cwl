@@ -5,19 +5,19 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 inputs:
-  carscores: 
-   type: string
-  
-  predictionlist:
-  	type: string
-  
-  predictor_matrix:
-  	type:string
+ carscores: 
+  type: string
+
+ predictionlist:
+  type: string
+
+ predictor_matrix:
+  type: string
 
 outputs:
-  models:
-    type: File
-  matches: 
- 	type: File
+ models:
+  type: File
+ matches: 
+  type: File
 
 baseCommand:

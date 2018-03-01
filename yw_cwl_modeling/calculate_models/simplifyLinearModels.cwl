@@ -5,13 +5,13 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 inputs:
-  model_errors:
-    type: File
-  ceofficient_values: 
- 	type: File
+ model_errors:
+  type: File
+ coefficient_values: 
+  type: File
   
 outputs:
-  linear_models:
-  	type: File
+ linear_models:
+  type: File
 
 baseCommand:
