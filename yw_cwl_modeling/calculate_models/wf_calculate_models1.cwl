@@ -11,11 +11,12 @@ inputs:
   type: string
 
  predictor_matrix:
-  type:string
+  type: string
 
 outputs:
  linear_models:
   type: File
+  outputSource: simplifyLinearModels/linear_models
 
 steps:
  defineLinearModels:
@@ -43,4 +44,4 @@ steps:
    coefficient_values: calculateLinearModels/coefficient_values
    model_errors: calculateLinearModels/model_errors
   out: 
-   linear_models: linear_models
+   linear_models: [linear_models]
