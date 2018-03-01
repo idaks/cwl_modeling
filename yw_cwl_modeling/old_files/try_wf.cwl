@@ -16,5 +16,5 @@ steps:
     run: fetch_FedData.cwl
     in:
       baseDir: dir
-    out: []
+    out: [Shapefiles]
 
