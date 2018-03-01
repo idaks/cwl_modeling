@@ -10,6 +10,7 @@ inputs:
 outputs:
   Shapefiles:
     type: File
+    outputSource: dwl_FedData/Shapefiles
 
 steps:
   dwl_FedData:
