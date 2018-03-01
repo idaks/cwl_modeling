@@ -16,8 +16,8 @@ inputs:
 
 outputs:
  models:
-  type: File
+  type: string
  matches: 
-  type: File
+  type: string
 
 baseCommand:

@@ -6,12 +6,12 @@ class: CommandLineTool
 
 inputs:
  model_errors:
-  type: File
+  type: string
  coefficient_values: 
-  type: File
+  type: string
   
 outputs:
  linear_models:
-  type: File
+  type: string
 
 baseCommand:

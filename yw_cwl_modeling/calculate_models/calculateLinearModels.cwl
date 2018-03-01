@@ -12,8 +12,8 @@ inputs:
   
 outputs:
  model_errors:
-  type: File
+  type: string
  coefficient_values:
-  type: File
+  type: string
 
 baseCommand:
