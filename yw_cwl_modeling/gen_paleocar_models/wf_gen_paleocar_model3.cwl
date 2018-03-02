@@ -25,9 +25,9 @@ inputs:
    type: boolean
 
 outputs:
-  linear_models:
+  paleocar_models:
     type: string
-    outputSource: calculate_models/linear_models
+    outputSource: optimize_models/paleocar_models
 
 steps:
   get_reconstruction_matrix:
@@ -68,6 +68,12 @@ steps:
       predictionlist: get_prediction_list/prediction_list
       max_no_predictor: get_predictor_matrix/max_no_predictor
     out: [linear_models]
+
+  optimize_models:
+    run: optimize_models.cwl
+    in:
+      linear_models: calculate_models/linear_models
+    out: [paleocar_models]
 
   print_messages:
     run: print_messages.cwl
