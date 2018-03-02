@@ -2,7 +2,8 @@
 
 cwlVersion: v1.0
 class: Workflow
-class: SubworkflowFeatureRequirement
+requirements:
+    - class: SubworkflowFeatureRequirement
 
 inputs:
   prediction_years: 
@@ -55,9 +56,8 @@ steps:
   get_car_scores: 
     run: get_car_scores.cwl
     in:
-      calibration_years: get_predictor_matrix/matrix_of_chronologies_calibration_year
+      matrix_of_chronologies_calibration_year: get_predictor_matrix/matrix_of_chronologies_calibration_year
       prism_data_of_sel_loc: prism_data_of_sel_loc
-      min_tree_width: min_tree_width
     out: [car_scores]
 
 
