@@ -6,7 +6,7 @@ class: CommandLineTool
 
 inputs:
 
-  dir: 
+  baseDir: 
    type: string
    inputBinding:
     position: 1

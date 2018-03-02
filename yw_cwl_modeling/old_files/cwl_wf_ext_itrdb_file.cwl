@@ -29,7 +29,7 @@ outputs:
 
 
 steps:
-  dwl_Feddata:
+  dwl_FedData:
     run: cwl_dwl_FedData.cwl
     in:
       dir: dir
