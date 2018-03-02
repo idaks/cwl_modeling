@@ -22,7 +22,7 @@ inputs:
    type: string
   
   verbose: 
-   type: string
+   type: boolean
 
 outputs:
   linear_models:
@@ -68,3 +68,9 @@ steps:
       predictionlist: get_prediction_list/prediction_list
       max_no_predictor: get_predictor_matrix/max_no_predictor
     out: [linear_models]
+
+  print_messages:
+    run: print_messages.cwl
+    in:
+      verbose: verbose
+    out: [messages]
