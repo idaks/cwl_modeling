@@ -10,7 +10,7 @@ inputs:
   predictionlist: 
    type: string
 
-  predictor_matrix: 
+  max_no_predictor: 
    type: string
 
 outputs:
@@ -24,7 +24,7 @@ steps:
     in:
       carscores: carscores
       predictionlist: predictionlist
-      predictor_matrix: predictor_matrix            
+      max_no_predictor: max_no_predictor            
     out: [models, matches]
  
   calculateLinearModels:
@@ -32,7 +32,6 @@ steps:
     in:
       models: defineLinearModels/models
       matches: defineLinearModels/matches
-      predictor_matrix: predictor_matrix            
     out: [coefficient_values, model_errors]
 
   simplifyLinearModels:

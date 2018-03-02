@@ -5,19 +5,16 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 inputs:
- carscores: 
+ prediction_years:
   type: string
-
- predictionlist:
+ tree_ring_values: 
   type: string
-
- max_no_predictor:
+ min_tree_width:
   type: string
+  default: Null 
 
 outputs:
- models:
-  type: string
- matches: 
+ matrix_of_chronologies_pred_years:
   type: string
 
 baseCommand:

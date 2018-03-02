@@ -5,19 +5,14 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 inputs:
- carscores: 
+ prism_data_of_sel_loc:
   type: string
-
- predictionlist:
-  type: string
-
- max_no_predictor:
+ matrix_of_chronologies_calibration_year:
   type: string
 
 outputs:
- models:
+ car_scores:
   type: string
- matches: 
-  type: string
+ 
 
 baseCommand:
