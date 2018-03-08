@@ -13,6 +13,6 @@ inputs:
 
 outputs:
  logfile:
-  type: string
+  type: File
 
 baseCommand:

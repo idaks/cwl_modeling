@@ -20,7 +20,7 @@ inputs:
   
 outputs:
   logfile:
-    type: string
+    type: File
 
 steps:
   concatInput:

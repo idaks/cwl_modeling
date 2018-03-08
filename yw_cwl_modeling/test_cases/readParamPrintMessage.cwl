@@ -10,6 +10,6 @@ inputs:
 
 outputs:
  logfile:
-  stdout
+  type: File
 
 baseCommand:
