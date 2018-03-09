@@ -21,9 +21,7 @@ inputs:
 outputs:
   logfile:
     type: File
-    outputSource: readParamPrintMessage/logfile
-    outputSource: concatInput/logfile
-    outputSource: readBuffFile/logfile
+    outputSource: logfile
 
 steps:
   concatInput:
