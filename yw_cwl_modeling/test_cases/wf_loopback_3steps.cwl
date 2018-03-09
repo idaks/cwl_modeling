@@ -19,7 +19,7 @@ steps:
     run: step1.cwl
     in:
       input1_step1: input1
-      input2_step1: step3/output_step2
+      input2_step1: step3/output_step3
     out: [output_step1]
  
   step2:
