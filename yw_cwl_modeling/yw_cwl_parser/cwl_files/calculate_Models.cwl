@@ -5,20 +5,17 @@
 cwlVersion: v1.0
 class: CommandLineTool
 inputs: 
- itrdb: 
+ predlist: 
   type: string 
  
- calibration_years: 
-  type: string 
- 
- min_width: 
-  type: string 
- 
-outputs: 
- predictor_matrix: 
+ carscores: 
   type: string 
  
  max_preds: 
+  type: string 
+ 
+outputs: 
+ linear_models: 
   type: string 
  
 
