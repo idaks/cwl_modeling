@@ -22,19 +22,19 @@ inputs:
 outputs: 
   prediction_model: 
    type: string 
-   outputSource: prediction_model
+   outputSource: gen_paleocar_model/prediction_model
   prediction_plot: 
    type: string 
-   outputSource: prediction_plot
+   outputSource: gen_paleocar_model/prediction_plot
   uncertainty_model: 
    type: string 
-   outputSource: uncertainty_model
+   outputSource: gen_paleocar_model/uncertainty_model
   uncertainty_plot: 
    type: string 
-   outputSource: uncertainty_plot
+   outputSource: gen_paleocar_model/uncertainty_plot
   paleocar_log_file: 
    type: string 
-   outputSource: paleocar_log_file
+   outputSource: gen_paleocar_model/paleocar_log_file
 steps: 
  gen_paleocar_model: 
   run: gen_paleocar_model.cwl 

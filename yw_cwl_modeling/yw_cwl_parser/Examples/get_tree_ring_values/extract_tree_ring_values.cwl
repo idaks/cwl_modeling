@@ -8,14 +8,11 @@ inputs:
  models: 
   type: string 
  
- matches: 
+ calibration_year: 
   type: string 
  
 outputs: 
- coefficients: 
-  type: string 
- 
- model.errors: 
+ tree_ring_values: 
   type: string 
  
 
