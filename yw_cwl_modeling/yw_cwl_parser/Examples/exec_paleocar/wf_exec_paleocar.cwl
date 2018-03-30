@@ -20,24 +20,24 @@ inputs:
   verbose: 
    type: string 
 outputs: 
-  uncertainty_model: 
-   type: string 
-   outputSource: gen_paleocar_model/uncertainty_model
-  paleocar_log_file: 
-   type: string 
-   outputSource: gen_paleocar_model/paleocar_log_file
-  uncertainty_plot: 
-   type: string 
-   outputSource: gen_paleocar_model/uncertainty_plot
-  prediction_plot: 
-   type: string 
-   outputSource: gen_paleocar_model/prediction_plot
   prediction_model: 
    type: string 
-   outputSource: gen_paleocar_model/prediction_model
+   outputSource: prediction_model
+  prediction_plot: 
+   type: string 
+   outputSource: prediction_plot
+  uncertainty_model: 
+   type: string 
+   outputSource: uncertainty_model
+  uncertainty_plot: 
+   type: string 
+   outputSource: uncertainty_plot
+  paleocar_log_file: 
+   type: string 
+   outputSource: paleocar_log_file
 steps: 
  gen_paleocar_model: 
-  run: cwl_files/gen_paleocar_model.cwl 
+  run: gen_paleocar_model.cwl 
   in: 
    prediction_years: prediction_years
    prism_data_for_coordinates: prism_data_for_coordinates
@@ -47,3 +47,4 @@ steps:
    min_width: min_width
    verbose: verbose
   out: [prediction_model , prediction_plot , uncertainty_model , uncertainty_plot , paleocar_log_file] 
+ 

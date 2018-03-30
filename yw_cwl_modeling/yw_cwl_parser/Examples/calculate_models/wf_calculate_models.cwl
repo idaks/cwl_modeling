@@ -9,30 +9,30 @@ inputs:
    type: string 
   carscores: 
    type: string 
-  max_preds: 
+  max.preds: 
    type: string 
 outputs: 
-  linear_models: 
+  linear.models: 
    type: string 
-   outputSource: simplifyLinearModels/final_models
+   outputSource: simplifyLinearModels/final.models
 steps: 
  defineLinearModels: 
-  run: cwl_files/defineLinearModels.cwl 
+  run: defineLinearModels.cwl 
   in: 
-   predlist: get_predlist/predlist
-   carscores: get_carscores/carscores
-   max_preds: get_predictor_matrix/max_preds
+   predlist: predlist
+   carscores: carscores
+   max.preds: max.preds
   out: [models , matches] 
  calculateLinearModels: 
-  run: cwl_files/calculateLinearModels.cwl 
+  run: calculateLinearModels.cwl 
   in: 
    models: defineLinearModels/models
    matches: defineLinearModels/matches
-  out: [coefficients , model_errors] 
+  out: [coefficients , model.errors] 
  simplifyLinearModels: 
-  run: cwl_files/simplifyLinearModels.cwl 
+  run: simplifyLinearModels.cwl 
   in: 
    coefficients: calculateLinearModels/coefficients
-   model_errors: calculateLinearModels/model_errors
-  out: [final_models] 
+   model.errors: calculateLinearModels/model.errors
+  out: [final.models] 
  
