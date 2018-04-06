@@ -14,14 +14,17 @@ inputs:
  frame_number: 
   type: string 
  
- raw_image_file: 
+ raw_image_path: 
   type: string 
  
- calibration_image_file: 
+ calibration_image: 
   type: string 
  
 outputs: 
- corrected_image_file: 
+ corrected_image: 
+  type: string 
+ 
+ corrected_image_path: 
   type: string 
  
  total_intensity: 

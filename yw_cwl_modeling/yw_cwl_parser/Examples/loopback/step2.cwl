@@ -5,20 +5,11 @@
 cwlVersion: v1.0
 class: CommandLineTool
 inputs: 
- cassette_id: 
-  type: string 
- 
- sample_spreadsheet: 
+ input2_step1: 
   type: string 
  
 outputs: 
- sample_name: 
-  type: string 
- 
- sample_quality: 
-  type: string 
- 
- run_log: 
+ output1_step2: 
   type: string 
  
 

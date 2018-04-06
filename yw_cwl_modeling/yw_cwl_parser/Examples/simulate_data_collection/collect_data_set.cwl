@@ -27,7 +27,7 @@ outputs:
  frame_number: 
   type: string 
  
- raw_image_file: 
+ raw_image_path: 
   type: string 
  
  run_log: 

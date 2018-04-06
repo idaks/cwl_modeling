@@ -13,12 +13,12 @@ inputs:
    type: string 
   sample_spreadsheet: 
    type: string 
-  calibration_image_file: 
+  calibration_image: 
    type: string 
 outputs: 
   corrected_image: 
    type: string 
-   outputSource: transform_images/corrected_image_file
+   outputSource: transform_images/corrected_image
   run_log: 
    type: string 
    outputSource: initialize_run/run_log
@@ -39,7 +39,7 @@ steps:
   run: load_screening_results.cwl 
   in: 
    cassette_id: cassette_id
-   sample_spreadsheet_file: sample_spreadsheet
+   sample_spreadsheet: sample_spreadsheet
   out: [sample_name , sample_quality , run_log] 
  calculate_strategy: 
   run: calculate_strategy.cwl 
@@ -62,24 +62,24 @@ steps:
    num_images: calculate_strategy/num_images
    accepted_sample: calculate_strategy/accepted_sample
    energies: calculate_strategy/energies
-  out: [sample_id , energy , frame_number , raw_image_file , run_log] 
+  out: [sample_id , energy , frame_number , raw_image_path , run_log] 
  transform_images: 
   run: transform_images.cwl 
   in: 
    sample_id: collect_data_set/sample_id
    energy: collect_data_set/energy
    frame_number: collect_data_set/frame_number
-   raw_image_file: collect_data_set/raw_image_file
-   calibration_image_file: calibration_image_file
-  out: [corrected_image_file , total_intensity , pixel_count , run_log] 
+   raw_image_path: collect_data_set/raw_image_path
+   calibration_image: calibration_image
+  out: [corrected_image , corrected_image_path , total_intensity , pixel_count , run_log] 
  log_average_image_intensity: 
   run: log_average_image_intensity.cwl 
   in: 
    cassette_id: cassette_id
    sample_id: collect_data_set/sample_id
    frame_number: collect_data_set/frame_number
+   corrected_image_path: transform_images/corrected_image_path
    total_intensity: transform_images/total_intensity
    pixel_count: transform_images/pixel_count
-   corrected_image_file: transform_images/corrected_image_file
   out: [collection_log] 
  

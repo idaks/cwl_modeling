@@ -14,13 +14,13 @@ inputs:
  frame_number: 
   type: string 
  
+ corrected_image_path: 
+  type: string 
+ 
  total_intensity: 
   type: string 
  
  pixel_count: 
-  type: string 
- 
- corrected_image_file: 
   type: string 
  
 outputs: 
