@@ -1,0 +1,134 @@
+
+% FACT: program(program_id, program_name, qualified_program_name, begin_annotation_id, end_annotation_id).
+program(1, 'workflow', 'workflow', 1, 24).
+program(2, 'wf_step', 'workflow.wf_step', 5, 11).
+program(3, 'sub_workflow', 'workflow.sub_workflow', 12, 23).
+program(4, 'sfw_step', 'workflow.sub_workflow.sfw_step', 17, 21).
+
+% FACT: workflow(program_id).
+workflow(1).
+
+% FACT: function(program_id).
+
+% FACT: has_subprogram(program_id, subprogram_id).
+has_subprogram(1, 2).
+has_subprogram(1, 3).
+has_subprogram(3, 4).
+
+% FACT: port(port_id, port_type, port_name, qualified_port_name, port_annotation_id, data_id).
+port(1, 'in', 'wf_in1', 'workflow<-wf_in1', 2, 1).
+port(2, 'in', 'wf_in2', 'workflow<-wf_in2', 3, 2).
+port(3, 'out', 'wf_out', 'workflow->wf_out', 4, 3).
+port(4, 'in', 'in1', 'workflow.wf_step<-in1', 6, 4).
+port(5, 'in', 'in2', 'workflow.wf_step<-in2', 8, 5).
+port(6, 'out', 'out1', 'workflow.wf_step->out1', 10, 6).
+port(7, 'in', 'sfw_1', 'workflow.sub_workflow<-sfw_1', 13, 6).
+port(8, 'out', 'swf_out', 'workflow.sub_workflow->swf_out', 15, 7).
+port(9, 'in', 'sfw_s1', 'workflow.sub_workflow.sfw_step<-sfw_s1', 18, 8).
+port(10, 'out', 'sfw_s_out', 'workflow.sub_workflow.sfw_step->sfw_s_out', 20, 9).
+
+% FACT: port_alias(port_id, alias).
+port_alias(4, 'wf_in1').
+port_alias(5, 'wf_in2').
+port_alias(7, 'out1').
+port_alias(8, 'wf_out').
+port_alias(9, 'sfw_1').
+
+% FACT: port_uri_template(port_id, uri).
+
+% FACT: has_in_port(block_id, port_id).
+has_in_port(1, 1).
+has_in_port(1, 2).
+has_in_port(2, 4).
+has_in_port(2, 5).
+has_in_port(3, 7).
+has_in_port(4, 9).
+
+% FACT: has_out_port(block_id, port_id).
+has_out_port(1, 3).
+has_out_port(2, 6).
+has_out_port(3, 8).
+has_out_port(4, 10).
+
+% FACT: data(data_id, data_name, qualified_data_name).
+data(1, 'wf_in1', '[wf_in1]').
+data(2, 'wf_in2', '[wf_in2]').
+data(3, 'wf_out', '[wf_out]').
+data(4, 'wf_in1', 'workflow[wf_in1]').
+data(5, 'wf_in2', 'workflow[wf_in2]').
+data(6, 'out1', 'workflow[out1]').
+data(7, 'wf_out', 'workflow[wf_out]').
+data(8, 'sfw_1', 'workflow.sub_workflow[sfw_1]').
+data(9, 'sfw_s_out', 'workflow.sub_workflow[sfw_s_out]').
+
+% FACT: channel(channel_id, data_id).
+channel(1, 3).
+channel(2, 4).
+channel(3, 5).
+channel(4, 6).
+channel(5, 1).
+channel(6, 2).
+channel(7, 7).
+
+% FACT: port_connects_to_channel(port_id, channel_id).
+port_connects_to_channel(8, 1).
+port_connects_to_channel(4, 2).
+port_connects_to_channel(5, 3).
+port_connects_to_channel(6, 4).
+port_connects_to_channel(7, 4).
+port_connects_to_channel(4, 5).
+port_connects_to_channel(5, 6).
+port_connects_to_channel(8, 7).
+
+% FACT: inflow_connects_to_channel(port_id, channel_id).
+inflow_connects_to_channel(1, 2).
+inflow_connects_to_channel(2, 3).
+inflow_connects_to_channel(1, 5).
+inflow_connects_to_channel(2, 6).
+
+% FACT: outflow_connects_to_channel(port_id, channel_id).
+outflow_connects_to_channel(3, 1).
+outflow_connects_to_channel(3, 7).
+
+% FACT: uri_variable(uri_variable_id, variable_name, port_id).
+
+% FACT: log_template(log_template_id, port_id, entry_template, log_annotation_id).
+
+% FACT: log_template_variable(log_variable_id, variable_name, log_template_id).
+
+% FACT: extract_source(source_id, source_path).
+extract_source(1, '').
+
+% FACT: annotation(annotation_id, source_id, line_number, tag, keyword, value).
+annotation(1, 1, 1, 'begin', '@begin', 'workflow').
+annotation(2, 1, 2, 'in', '@in', 'wf_in1').
+annotation(3, 1, 3, 'in', '@in', 'wf_in2').
+annotation(4, 1, 4, 'out', '@out', 'wf_out').
+annotation(5, 1, 7, 'begin', '@begin', 'wf_step').
+annotation(6, 1, 8, 'in', '@in', 'in1').
+annotation(7, 1, 8, 'as', '@as', 'wf_in1').
+annotation(8, 1, 9, 'in', '@in', 'in2').
+annotation(9, 1, 9, 'as', '@as', 'wf_in2').
+annotation(10, 1, 10, 'out', '@out', 'out1').
+annotation(11, 1, 11, 'end', '@end', 'wf_step').
+annotation(12, 1, 13, 'begin', '@begin', 'sub_workflow').
+annotation(13, 1, 14, 'in', '@in', 'sfw_1').
+annotation(14, 1, 14, 'as', '@as', 'out1').
+annotation(15, 1, 15, 'out', '@out', 'swf_out').
+annotation(16, 1, 15, 'as', '@as', 'wf_out').
+annotation(17, 1, 17, 'begin', '@begin', 'sfw_step').
+annotation(18, 1, 18, 'in', '@in', 'sfw_s1').
+annotation(19, 1, 18, 'as', '@as', 'sfw_1').
+annotation(20, 1, 19, 'out', '@out', 'sfw_s_out').
+annotation(21, 1, 20, 'end', '@end', 'sfw_step').
+annotation(22, 1, 20, 'as', '@as', 'swf_out').
+annotation(23, 1, 22, 'end', '@end', 'sub_workflow').
+annotation(24, 1, 25, 'end', '@end', 'workflow').
+
+% FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
+annotation_qualifies(7, 6).
+annotation_qualifies(9, 8).
+annotation_qualifies(14, 13).
+annotation_qualifies(16, 15).
+annotation_qualifies(19, 18).
+annotation_qualifies(22, 21).
