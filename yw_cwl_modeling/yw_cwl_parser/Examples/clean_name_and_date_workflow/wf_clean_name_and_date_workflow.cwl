@@ -12,13 +12,13 @@ inputs:
 outputs: 
   name_val_log: 
    type: string 
-   outputSource: validate_scientificName_field_of_data/name_val_log
+   outputSource: Not in ports list/name_val_log
   output2_data: 
    type: string 
-   outputSource: validate_eventDate_field_of_data/output2_data
+   outputSource: Not in ports list/output2_data
   date_val_log: 
    type: string 
-   outputSource: validate_eventDate_field_of_data/date_val_log
+   outputSource: Not in ports list/date_val_log
 steps: 
  validate_scientificName_field_of_data: 
   run: wf_validate_scientificName_field_of_data.cwl 

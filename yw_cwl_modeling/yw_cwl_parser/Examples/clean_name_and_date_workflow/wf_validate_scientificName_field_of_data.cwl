@@ -12,13 +12,13 @@ inputs:
 outputs: 
   output1_data: 
    type: string 
-   outputSource: validate_scientificName_field_of_data/output1_data
+   outputSource: Not in ports list/output1_data
   name_val_log: 
    type: string 
-   outputSource: validate_scientificName_field_of_data/name_val_log
+   outputSource: Not in ports list/name_val_log
   record_id_data: 
    type: string 
-   outputSource: validate_scientificName_field_of_data/record_id_data
+   outputSource: Not in ports list/record_id_data
 steps: 
  initialize_run: 
   run: initialize_run.cwl 
@@ -83,7 +83,7 @@ steps:
   run: log_accepted_record.cwl 
   in: 
    RecordID: read_input1_data_records/RecordID
-   final_result: log_rejected_record/final_result
+   final_result: find_matching_local_authority_source_record/final_result
    original_scientificName: check_empty_value/original_scientificName
   out: [accepted_record_count , name_val_log] 
  write_output1_data: 
@@ -100,6 +100,6 @@ steps:
   run: log_summary.cwl 
   in: 
    accepted_record_count: log_accepted_record/accepted_record_count
-   rejected_record_count: log_rejected_record/rejected_record_count
+   rejected_record_count: log_rejected_unmatching_record/rejected_record_count
   out: [name_val_log] 
  

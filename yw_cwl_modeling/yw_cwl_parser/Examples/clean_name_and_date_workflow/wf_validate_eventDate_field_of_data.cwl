@@ -12,10 +12,10 @@ inputs:
 outputs: 
   output2_data: 
    type: string 
-   outputSource: validate_eventDate_field_of_data/output2_data
+   outputSource: Not in ports list/output2_data
   date_val_log: 
    type: string 
-   outputSource: validate_eventDate_field_of_data/date_val_log
+   outputSource: Not in ports list/date_val_log
 steps: 
  initialize_run: 
   run: initialize_run.cwl 
@@ -24,7 +24,7 @@ steps:
  read_input2_data_records: 
   run: read_input2_data_records.cwl 
   in: 
-   input2_data: input2_data
+   input2_data: Parameter
    record_id_data: record_id_data
   out: [original2_eventDate , RecordID , original2_others , date_val_log] 
  check_empty_value: 
