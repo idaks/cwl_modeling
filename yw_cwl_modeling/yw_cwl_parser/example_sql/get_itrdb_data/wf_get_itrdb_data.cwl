@@ -46,9 +46,6 @@ outputs:
   _YW_OUT_layer_tracts: 
    type: string 
    outputSource: uncompress_shapefile/layer_tracts
-  _YW_OUT_layer_tracts: 
-   type: string 
-   outputSource: uncompress_shapefile/layer_tracts
   _YW_OUT_metadata_xml_file: 
    type: string 
    outputSource: uncompress_shapefile/metadata_xml_file
@@ -62,18 +59,18 @@ steps:
  create_shapefile_dir: 
   run: create_shapefile_dir.cwl 
   in: 
-   dir_name: dir_name
+   dir_name: study_region
   out: [user_created_dir] 
  download_shapefile_archive: 
   run: download_shapefile_archive.cwl 
   in: 
    dir: dir
-   file_archive: file_archive
+   file_archive: shapefile_archive
   out: [compressed_shapefile] 
  uncompress_shapefile: 
   run: uncompress_shapefile.cwl 
   in: 
-   dir_name: dir_name
+   dir_name: study_region
    zipfile: zipfile
   out: [layer_boundary,layer_tracts,metadata_xml_file,shapefiles_dir,tracts_xml_file] 
  read_shapefile: 

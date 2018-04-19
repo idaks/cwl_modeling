@@ -63,7 +63,7 @@ steps:
    prism_data_for_coordinates: prism_data_for_coordinates
   out: [carscores] 
  calculate_Models: 
-  run: wf_calculate_Models.cwl 
+  run: wfcalculate_Models.cwl 
   in: 
    carscores: get_carscores/carscores
    max_preds: get_predictor_matrix/max_preds

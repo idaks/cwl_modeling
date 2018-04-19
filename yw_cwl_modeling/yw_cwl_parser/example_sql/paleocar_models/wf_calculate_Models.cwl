@@ -23,9 +23,9 @@ steps:
  defineLinearModels: 
   run: defineLinearModels.cwl 
   in: 
-   carscores: get_carscores/carscores
-   max_preds: get_predictor_matrix/max_preds
-   predlist: get_predlist/predlist
+   carscores: carscores
+   max_preds: max_preds
+   predlist: predlist
   out: [matches,models] 
  calculateLinearModels: 
   run: calculateLinearModels.cwl 
