@@ -16,8 +16,9 @@ drop table wf_ports ;
 
 create table cwl_steps_info as 
 select 
-	wf.wf_id, s.program_id, s.program_name, p.port_name, p.port_id, p.port_type, p.data_id  
-from 
+	wf.wf_id as wf_id, s.program_id as program_id, s.program_name as program_name, p.port_name as port_name
+	, p.port_id as port_id, p.port_type as port_type, p.data_id   as data_id 
+from  
 	steps s, port p, has_in_port inp, 
 	(select 
 		sub_program_id  , program_id as wf_id 
@@ -30,7 +31,8 @@ and	p.port_id = inp.port_id
 and inp.block_id  = wf.sub_program_id
 union 
 select 
-	wf.wf_id, s.program_id, s.program_name, p.port_name,p.port_id, p.port_type , p.data_id
+	wf.wf_id as wf_id, s.program_id as program_id, s.program_name as program_name, p.port_name as port_name
+	, p.port_id as port_id, p.port_type as port_type, p.data_id   as data_id 
 from 
 	steps s, port p, has_out_port out,
 	(select 
