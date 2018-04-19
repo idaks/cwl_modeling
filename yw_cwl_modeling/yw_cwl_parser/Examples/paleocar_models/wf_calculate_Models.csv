@@ -1,5 +1,5 @@
 ,program_name,input_ports,output_ports
 10,simplifyLinearModels.cwl,"[('coefficients', 'calculateLinearModels/coefficients'), ('model_errors', 'calculateLinearModels/model_errors')]",['final_models']
-7,calculate_Models,"['predlist', 'carscores', 'max_preds']","[('linear_models', 'simplifyLinearModels/final_models')]"
+7,calculate_Models,"[('predlist', 'predlist'), ('carscores', 'carscores'), ('max_preds', 'max_preds')]","[('linear_models', 'simplifyLinearModels/final_models')]"
 8,defineLinearModels.cwl,"[('predlist', 'predlist'), ('carscores', 'carscores'), ('max_preds', 'max_preds')]","['models', 'matches']"
 9,calculateLinearModels.cwl,"[('models', 'defineLinearModels/models'), ('matches', 'defineLinearModels/matches')]","['coefficients', 'model_errors']"

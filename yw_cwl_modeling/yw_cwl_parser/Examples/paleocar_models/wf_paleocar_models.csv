@@ -1,5 +1,5 @@
 ,program_name,input_ports,output_ports
-1,paleocar_models,"['prediction_years', 'prism_data_for_coordinates', 'itrdb', 'calibration_years', 'min_width', 'verbose']","[('paleocar_models', 'optimizeModels/paleocar_models')]"
+1,paleocar_models,"[('prediction_years', 'prediction_years'), ('prism_data_for_coordinates', 'prism_data_for_coordinates'), ('itrdb', 'itrdb'), ('calibration_years', 'calibration_years'), ('min_width', 'min_width'), ('verbose', 'verbose')]","[('paleocar_models', 'optimizeModels/paleocar_models')]"
 10,simplifyLinearModels.cwl,"[('coefficients', 'calculateLinearModels/coefficients'), ('model_errors', 'calculateLinearModels/model_errors')]",['final_models']
 11,optimizeModels.cwl,"[('linear_models', 'calculate_Models/linear_models')]",['paleocar_models']
 2,print_message.cwl,"[('verbose', 'verbose')]",[]
