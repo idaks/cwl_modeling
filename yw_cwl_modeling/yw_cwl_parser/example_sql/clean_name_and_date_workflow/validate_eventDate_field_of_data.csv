@@ -1,0 +1,23 @@
+,program_name,input_ports,output_ports
+10,update_scientificName,"['original_scientificName', 'matching_local_authority_source_record']",['updated_scientificName']
+11,update_authorship,"['matching_local_authority_source_record', 'original_authorship']",['updated_authorship']
+12,log_updated_record,"['updated_scientificName', 'updated_authorship', 'original_authorship', 'original_scientificName']",['name_val_log']
+13,log_accepted_record,"['RecordID', 'final_result', 'original_scientificName']","['accepted_record_count', 'name_val_log']"
+14,write_output1_data,"['original_others', 'original_scientificName', 'original_scientificName', 'original_authorship', 'updated_scientificName', 'updated_authorship']",['output1_data']
+15,log_summary,"['accepted_record_count', 'rejected_record_count']",['name_val_log']
+17,initialize_run,[],['date_val_log']
+18,read_input2_data_records,"['input2_data', 'record_id_data']","['original2_eventDate', 'RecordID', 'original2_others', 'date_val_log']"
+19,check_empty_value,['original2_eventDate'],"['check_result', 'original2_eventDate', 'original2_eventDate', 'date_val_log']"
+20,log_rejected_record,"['RecordID', 'original2_eventDate', 'check_result']","['final_result', 'rejected2_record_count', 'date_val_log']"
+21,check_ISO_compliant,['original2_eventDate'],"['match_result', 'original2_eventDate', 'original2_eventDate', 'date_val_log']"
+22,update_eventDate,"['original2_eventDate', 'match_result']","['updated2_eventDate', 'date_val_log']"
+23,log_accepted_record,"['RecordID', 'updated2_eventDate', 'original2_eventDate']","['final_result', 'accepted2_record_count', 'date_val_log']"
+24,write_output2_data,"['original2_others', 'updated2_eventDate', 'original2_eventDate', 'original2_eventDate']",['output2_data']
+25,log_summary,"['accepted2_record_count', 'rejected2_record_count']",['date_val_log']
+3,initialize_run,[],['name_val_log']
+4,read_scientificName,['local_authority_source'],['local_authority_source_scientificName_lst']
+5,read_input1_data_records,['input1_data'],"['original_scientificName', 'original_authorship', 'RecordID', 'original_others', 'record_id_data', 'name_val_log']"
+6,check_empty_value,['original_scientificName'],"['check_result', 'original_scientificName', 'original_scientificName', 'name_val_log']"
+7,log_rejected_record,"['RecordID', 'original_scientificName', 'check_result']","['final_result', 'rejected_record_count', 'name_val_log']"
+8,find_matching_local_authority_source_record,"['original_scientificName', 'local_authority_source_scientificName_lst']","['match_result', 'matching_local_authority_source_record', 'matching_local_authority_source_record', 'matching_local_authority_source_record', 'final_result', 'matching_method', 'name_val_log']"
+9,log_rejected_unmatching_record,"['RecordID', 'original_scientificName', 'matching_local_authority_source_record']","['rejected_record_count', 'name_val_log']"
