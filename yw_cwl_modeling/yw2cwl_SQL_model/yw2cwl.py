@@ -331,21 +331,21 @@ def create_workflow_tables(conn):
 def drop_workflow_tables():
 
 	conn.commit()
-	conn.execute (''' drop table channel ''')                    
-	conn.execute (''' drop table data  ''')                 
-	conn.execute (''' drop table has_in_port ''')                  
-	conn.execute (''' drop table has_out_port ''')                
-	conn.execute (''' drop table has_subprogram ''')              
-	conn.execute (''' drop table inflow_connects_to_channel ''')  
-	conn.execute (''' drop table outflow_connects_to_channel ''')
-	conn.execute (''' drop table port ''')
-	conn.execute (''' drop table port_alias ''')
-	conn.execute (''' drop table port_connects_to_channel ''')
-	conn.execute (''' drop table steps ''')
-	conn.execute (''' drop table workflow ''')
-	conn.execute (''' drop table cwl_steps_info ''')
-	conn.execute (''' drop table wf_ports ''')
-	conn.execute (''' drop table qual_portname ''')
+	conn.execute (''' drop table if exists channel ''')                    
+	conn.execute (''' drop table if exists data  ''')                 
+	conn.execute (''' drop table if exists has_in_port ''')                  
+	conn.execute (''' drop table if exists has_out_port ''')                
+	conn.execute (''' drop table if exists has_subprogram ''')              
+	conn.execute (''' drop table if exists inflow_connects_to_channel ''')  
+	conn.execute (''' drop table if exists outflow_connects_to_channel ''')
+	conn.execute (''' drop table if exists port ''')
+	conn.execute (''' drop table if exists port_alias ''')
+	conn.execute (''' drop table if exists port_connects_to_channel ''')
+	conn.execute (''' drop table if exists steps ''')
+	conn.execute (''' drop table if exists workflow ''')
+	conn.execute (''' drop table if exists cwl_steps_info ''')
+	conn.execute (''' drop table if exists wf_ports ''')
+	conn.execute (''' drop table if exists qual_portname ''')
 	conn.commit()
 	return 
 
@@ -781,7 +781,7 @@ db_model = yw_model_file[:-2] + '.db'
 print(db_model)
 conn = sqlite3.connect(db_model)
 
-#drop_workflow_tables()
+drop_workflow_tables()
 create_workflow_tables(conn);
 
 
