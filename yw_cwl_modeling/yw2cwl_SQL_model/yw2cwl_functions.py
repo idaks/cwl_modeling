@@ -344,8 +344,8 @@ def drop_workflow_tables():
 	conn.execute (''' drop table steps ''')
 	conn.execute (''' drop table workflow ''')
 	conn.execute (''' drop table cwl_steps_info ''')
-	conn.execute (''' drop table wf_ports ''')
-	conn.execute (''' drop table qual_portname ''')
+	#conn.execute (''' drop table wf_ports ''')
+	#conn.execute (''' drop table qual_portname ''')
 	conn.commit()
 	return 
 
@@ -775,8 +775,7 @@ def create_cwl_workflow():
 
 """        	
 base_dir = 'example_sql/'
-input_file = input("Enter the yw model filename:  ")
-yw_model_file = base_dir + input_file
+yw_model_file = base_dir + "get_itrdb_data/get_itrdb_data.P"
 db_model = yw_model_file[:-2] + '.db'
 print(db_model)
 conn = sqlite3.connect(db_model)
@@ -784,11 +783,12 @@ conn = sqlite3.connect(db_model)
 #drop_workflow_tables()
 create_workflow_tables(conn);
 
-
 print("+" * 100)
 print("Reading Model Files and creating tables in the database: " + db_model)
 read_yw_model(yw_model_file)
 print_footer()
+
+
 
 print("+" * 100)
 print("Creating dataframes for processing. ")
@@ -815,7 +815,6 @@ print("+" * 100)
 print("create list of workflow_id and program_id")
 wf_id = cwl_file_df['workflow_id'].unique()
 prog_list = cwl_file_df['program_id'].unique()
-print(wf_port_df)
 dirname = base_dir +  wf_port_df[wf_port_df["program_id"] ==1]['program_name'].values[0]
 print ("Directory for storing the output files. " + dirname)
 print_footer()

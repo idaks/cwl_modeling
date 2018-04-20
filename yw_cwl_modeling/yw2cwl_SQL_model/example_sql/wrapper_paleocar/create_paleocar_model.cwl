@@ -2,23 +2,29 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- user_map_marker_pos: 
+ cal_year: 
   type: string 
  
- user_prediction_years: 
+ itrdb: 
+  type: string 
+ 
+ min.width: 
+  type: string 
+ 
+ pred_year: 
+  type: string 
+ 
+ predictands: 
+  type: string 
+ 
+ region_label: 
   type: string 
  
 outputs: 
- coordinates: 
+ log_file: 
   type: string 
  
- prediction_years: 
-  type: string 
- 
- run_id: 
-  type: string 
- 
- session_id: 
+ pal_model: 
   type: string 
  
 baseCommand: 

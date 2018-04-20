@@ -2,17 +2,14 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- historical_precip_data: 
+ coefficients: 
   type: string 
  
- tree_ring_data: 
+ model.errors: 
   type: string 
  
 outputs: 
- itrdb: 
-  type: string 
- 
- prism_data: 
+ final.models: 
   type: string 
  
 baseCommand: 

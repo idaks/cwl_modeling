@@ -2,17 +2,17 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- historical_precip_data: 
+ models: 
   type: string 
  
- tree_ring_data: 
+ pred_year: 
   type: string 
  
 outputs: 
- itrdb: 
+ uncertainty_graph: 
   type: string 
  
- prism_data: 
+ uncertainty_model: 
   type: string 
  
 baseCommand: 

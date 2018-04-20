@@ -2,17 +2,20 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- historical_precip_data: 
+ carscores: 
   type: string 
  
- tree_ring_data: 
+ max.preds: 
+  type: string 
+ 
+ predlist: 
   type: string 
  
 outputs: 
- itrdb: 
+ matches: 
   type: string 
  
- prism_data: 
+ models: 
   type: string 
  
 baseCommand: 

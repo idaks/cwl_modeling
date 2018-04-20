@@ -1,7 +1,6 @@
-
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-class: CommandLineTool
+#!/usr/bin/env cwl-runner 
+cwlVersion: v1.0 
+class: CommandLineTool 
 inputs: 
  coordinates: 
   type: string 
