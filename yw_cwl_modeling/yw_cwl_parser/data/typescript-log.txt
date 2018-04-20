@@ -1,0 +1,772 @@
+Script started on Thu Apr 19 11:56:47 2018
+.bashrc start
+.bashrc end
+[[34;1mdata[m [1m[32;1m:)[m]$ [[34;1mdata[m [1m[32;1m:)[m]$ sqlite3 --version
+3.13.0 2016-05-18 10:57:30 fc49f556e48970561d7ab6a2f24fdd7d9eb81ff2
+[[34;1mdata[m [1m[32;1m:)[m]$                                                                                                                                                                   [[34;1mdata[m [1m[32;1m:)[m]$ sqlite3 yw_model.db
+SQLite version 3.13.0 2016-05-18 10:57:30
+Enter ".help" for usage hints.
+sqlite> .dump
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE steps (
+                program_id      int     primary key not NULL ,
+                program_name      text,
+                qualified_program_name  text);
+INSERT INTO "steps" VALUES(1,'paleocar_models','paleocar_models');
+INSERT INTO "steps" VALUES(2,'print_message','paleocar_models.print_message');
+INSERT INTO "steps" VALUES(3,'get_predictor_matrix','paleocar_models.get_predictor_matrix');
+INSERT INTO "steps" VALUES(4,'get_reconstruction_matrix','paleocar_models.get_reconstruction_matrix');
+INSERT INTO "steps" VALUES(5,'get_predlist','paleocar_models.get_predlist');
+INSERT INTO "steps" VALUES(6,'get_carscores','paleocar_models.get_carscores');
+INSERT INTO "steps" VALUES(7,'calculate_Models','paleocar_models.calculate_Models');
+INSERT INTO "steps" VALUES(8,'defineLinearModels','paleocar_models.calculate_Models.defineLinearModels');
+INSERT INTO "steps" VALUES(9,'calculateLinearModels','paleocar_models.calculate_Models.calculateLinearModels');
+INSERT INTO "steps" VALUES(10,'simplifyLinearModels','paleocar_models.calculate_Models.simplifyLinearModels');
+INSERT INTO "steps" VALUES(11,'optimizeModels','paleocar_models.optimizeModels');
+CREATE TABLE workflow (
+                program_id      int     primary key not NULL
+                );
+INSERT INTO "workflow" VALUES(1);
+INSERT INTO "workflow" VALUES(7);
+CREATE TABLE has_subprogram (
+                program_id  int,
+                sub_program_id      int
+                );
+INSERT INTO "has_subprogram" VALUES(1,2);
+INSERT INTO "has_subprogram" VALUES(1,3);
+INSERT INTO "has_subprogram" VALUES(1,4);
+INSERT INTO "has_subprogram" VALUES(1,5);
+INSERT INTO "has_subprogram" VALUES(1,6);
+INSERT INTO "has_subprogram" VALUES(1,7);
+INSERT INTO "has_subprogram" VALUES(7,8);
+INSERT INTO "has_subprogram" VALUES(7,9);
+INSERT INTO "has_subprogram" VALUES(7,10);
+INSERT INTO "has_subprogram" VALUES(1,11);
+CREATE TABLE port (
+                port_id      int     primary key not NULL,
+                port_type  int,
+                port_name  text,
+                qualified_port_name text,
+                port_annotation_id int, 
+                data_id int 
+                );
+INSERT INTO "port" VALUES(1,'IN','prediction_years','paleocar_models<-prediction_years',3,1);
+INSERT INTO "port" VALUES(2,'IN','prism_data_for_coordinates','paleocar_models<-prism_data_for_coordinates',4,2);
+INSERT INTO "port" VALUES(3,'IN','itrdb','paleocar_models<-itrdb',5,3);
+INSERT INTO "port" VALUES(4,'IN','calibration_years','paleocar_models<-calibration_years',6,4);
+INSERT INTO "port" VALUES(5,'IN','min_width','paleocar_models<-min_width',7,5);
+INSERT INTO "port" VALUES(6,'IN','verbose','paleocar_models<-verbose',8,6);
+INSERT INTO "port" VALUES(7,'OUT','paleocar_models','paleocar_models->paleocar_models',9,7);
+INSERT INTO "port" VALUES(8,'IN','verbose','paleocar_models.print_message<-verbose',12,8);
+INSERT INTO "port" VALUES(9,'IN','itrdb','paleocar_models.get_predictor_matrix<-itrdb',16,9);
+INSERT INTO "port" VALUES(10,'IN','calibration_years','paleocar_models.get_predictor_matrix<-calibration_years',18,10);
+INSERT INTO "port" VALUES(11,'IN','min_width','paleocar_models.get_predictor_matrix<-min_width',19,11);
+INSERT INTO "port" VALUES(12,'OUT','predictor_matrix','paleocar_models.get_predictor_matrix->predictor_matrix',20,12);
+INSERT INTO "port" VALUES(13,'OUT','max_preds','paleocar_models.get_predictor_matrix->max_preds',21,13);
+INSERT INTO "port" VALUES(14,'IN','itrdb','paleocar_models.get_reconstruction_matrix<-itrdb',25,9);
+INSERT INTO "port" VALUES(15,'IN','prediction_years','paleocar_models.get_reconstruction_matrix<-prediction_years',27,14);
+INSERT INTO "port" VALUES(16,'IN','min_width','paleocar_models.get_reconstruction_matrix<-min_width',28,11);
+INSERT INTO "port" VALUES(17,'OUT','reconstruction_matrix','paleocar_models.get_reconstruction_matrix->reconstruction_matrix',29,15);
+INSERT INTO "port" VALUES(18,'IN','reconstruction_matrix','paleocar_models.get_predlist<-reconstruction_matrix',33,15);
+INSERT INTO "port" VALUES(19,'OUT','predlist','paleocar_models.get_predlist->predlist',34,16);
+INSERT INTO "port" VALUES(20,'IN','prism_data_for_coordinates','paleocar_models.get_carscores<-prism_data_for_coordinates',38,17);
+INSERT INTO "port" VALUES(21,'IN','predictor_matrix','paleocar_models.get_carscores<-predictor_matrix',40,12);
+INSERT INTO "port" VALUES(22,'OUT','carscores','paleocar_models.get_carscores->carscores',41,18);
+INSERT INTO "port" VALUES(23,'IN','predlist','paleocar_models.calculate_Models<-predlist',44,16);
+INSERT INTO "port" VALUES(24,'IN','carscores','paleocar_models.calculate_Models<-carscores',45,18);
+INSERT INTO "port" VALUES(25,'IN','max_preds','paleocar_models.calculate_Models<-max_preds',46,13);
+INSERT INTO "port" VALUES(26,'OUT','linear_models','paleocar_models.calculate_Models->linear_models',47,19);
+INSERT INTO "port" VALUES(27,'IN','predlist','paleocar_models.calculate_Models.defineLinearModels<-predlist',49,20);
+INSERT INTO "port" VALUES(28,'IN','carscores','paleocar_models.calculate_Models.defineLinearModels<-carscores',50,21);
+INSERT INTO "port" VALUES(29,'IN','max_preds','paleocar_models.calculate_Models.defineLinearModels<-max_preds',51,22);
+INSERT INTO "port" VALUES(30,'OUT','models','paleocar_models.calculate_Models.defineLinearModels->models',52,23);
+INSERT INTO "port" VALUES(31,'OUT','matches','paleocar_models.calculate_Models.defineLinearModels->matches',53,24);
+INSERT INTO "port" VALUES(32,'IN','models','paleocar_models.calculate_Models.calculateLinearModels<-models',56,23);
+INSERT INTO "port" VALUES(33,'IN','matches','paleocar_models.calculate_Models.calculateLinearModels<-matches',57,24);
+INSERT INTO "port" VALUES(34,'OUT','coefficients','paleocar_models.calculate_Models.calculateLinearModels->coefficients',58,25);
+INSERT INTO "port" VALUES(35,'OUT','model_errors','paleocar_models.calculate_Models.calculateLinearModels->model_errors',59,26);
+INSERT INTO "port" VALUES(36,'IN','coefficients','paleocar_models.calculate_Models.simplifyLinearModels<-coefficients',62,25);
+INSERT INTO "port" VALUES(37,'IN','model_errors','paleocar_models.calculate_Models.simplifyLinearModels<-model_errors',63,26);
+INSERT INTO "port" VALUES(38,'OUT','final_models','paleocar_models.calculate_Models.simplifyLinearModels->final_models',64,27);
+INSERT INTO "port" VALUES(39,'IN','linear_models','paleocar_models.optimizeModels<-linear_models',69,19);
+INSERT INTO "port" VALUES(40,'OUT','paleocar_models','paleocar_models.optimizeModels->paleocar_models',70,28);
+CREATE TABLE port_alias (
+                port_id    int  ,
+                alias    text
+                );
+INSERT INTO "port_alias" VALUES(38,'linear_models');
+CREATE TABLE has_in_port (
+                block_id int,
+                port_id    int
+                );
+INSERT INTO "has_in_port" VALUES(1,1);
+INSERT INTO "has_in_port" VALUES(1,2);
+INSERT INTO "has_in_port" VALUES(1,3);
+INSERT INTO "has_in_port" VALUES(1,4);
+INSERT INTO "has_in_port" VALUES(1,5);
+INSERT INTO "has_in_port" VALUES(1,6);
+INSERT INTO "has_in_port" VALUES(2,8);
+INSERT INTO "has_in_port" VALUES(3,9);
+INSERT INTO "has_in_port" VALUES(3,10);
+INSERT INTO "has_in_port" VALUES(3,11);
+INSERT INTO "has_in_port" VALUES(4,14);
+INSERT INTO "has_in_port" VALUES(4,15);
+INSERT INTO "has_in_port" VALUES(4,16);
+INSERT INTO "has_in_port" VALUES(5,18);
+INSERT INTO "has_in_port" VALUES(6,20);
+INSERT INTO "has_in_port" VALUES(6,21);
+INSERT INTO "has_in_port" VALUES(7,23);
+INSERT INTO "has_in_port" VALUES(7,24);
+INSERT INTO "has_in_port" VALUES(7,25);
+INSERT INTO "has_in_port" VALUES(8,27);
+INSERT INTO "has_in_port" VALUES(8,28);
+INSERT INTO "has_in_port" VALUES(8,29);
+INSERT INTO "has_in_port" VALUES(9,32);
+INSERT INTO "has_in_port" VALUES(9,33);
+INSERT INTO "has_in_port" VALUES(10,36);
+INSERT INTO "has_in_port" VALUES(10,37);
+INSERT INTO "has_in_port" VALUES(11,39);
+CREATE TABLE has_out_port (
+                block_id int,
+                port_id    int
+                );
+INSERT INTO "has_out_port" VALUES(1,7);
+INSERT INTO "has_out_port" VALUES(3,12);
+INSERT INTO "has_out_port" VALUES(3,13);
+INSERT INTO "has_out_port" VALUES(4,17);
+INSERT INTO "has_out_port" VALUES(5,19);
+INSERT INTO "has_out_port" VALUES(6,22);
+INSERT INTO "has_out_port" VALUES(7,26);
+INSERT INTO "has_out_port" VALUES(8,30);
+INSERT INTO "has_out_port" VALUES(8,31);
+INSERT INTO "has_out_port" VALUES(9,34);
+INSERT INTO "has_out_port" VALUES(9,35);
+INSERT INTO "has_out_port" VALUES(10,38);
+INSERT INTO "has_out_port" VALUES(11,40);
+CREATE TABLE data (
+                data_id int,
+                data_name    text,
+                qualified_data_name text
+                );
+CREATE TABLE channel (
+                channel_id int,
+                data_id    int
+                );
+INSERT INTO "channel" VALUES(13,7);
+INSERT INTO "channel" VALUES(14,8);
+INSERT INTO "channel" VALUES(15,9);
+INSERT INTO "channel" VALUES(16,9);
+INSERT INTO "channel" VALUES(17,10);
+INSERT INTO "channel" VALUES(18,11);
+INSERT INTO "channel" VALUES(19,11);
+INSERT INTO "channel" VALUES(20,14);
+INSERT INTO "channel" VALUES(21,15);
+INSERT INTO "channel" VALUES(22,17);
+INSERT INTO "channel" VALUES(23,12);
+INSERT INTO "channel" VALUES(24,16);
+INSERT INTO "channel" VALUES(25,18);
+INSERT INTO "channel" VALUES(26,13);
+INSERT INTO "channel" VALUES(27,19);
+INSERT INTO "channel" VALUES(28,1);
+INSERT INTO "channel" VALUES(29,2);
+INSERT INTO "channel" VALUES(30,3);
+INSERT INTO "channel" VALUES(31,3);
+INSERT INTO "channel" VALUES(32,4);
+INSERT INTO "channel" VALUES(33,5);
+INSERT INTO "channel" VALUES(34,5);
+INSERT INTO "channel" VALUES(35,6);
+INSERT INTO "channel" VALUES(36,28);
+INSERT INTO "channel" VALUES(1,19);
+INSERT INTO "channel" VALUES(2,20);
+INSERT INTO "channel" VALUES(3,21);
+INSERT INTO "channel" VALUES(4,22);
+INSERT INTO "channel" VALUES(5,23);
+INSERT INTO "channel" VALUES(6,24);
+INSERT INTO "channel" VALUES(7,25);
+INSERT INTO "channel" VALUES(8,26);
+INSERT INTO "channel" VALUES(9,16);
+INSERT INTO "channel" VALUES(10,18);
+INSERT INTO "channel" VALUES(11,13);
+INSERT INTO "channel" VALUES(12,27);
+CREATE TABLE port_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+INSERT INTO "port_connects_to_channel" VALUES(40,13);
+INSERT INTO "port_connects_to_channel" VALUES(8,14);
+INSERT INTO "port_connects_to_channel" VALUES(9,15);
+INSERT INTO "port_connects_to_channel" VALUES(14,16);
+INSERT INTO "port_connects_to_channel" VALUES(10,17);
+INSERT INTO "port_connects_to_channel" VALUES(11,18);
+INSERT INTO "port_connects_to_channel" VALUES(16,19);
+INSERT INTO "port_connects_to_channel" VALUES(15,20);
+INSERT INTO "port_connects_to_channel" VALUES(17,21);
+INSERT INTO "port_connects_to_channel" VALUES(18,21);
+INSERT INTO "port_connects_to_channel" VALUES(20,22);
+INSERT INTO "port_connects_to_channel" VALUES(12,23);
+INSERT INTO "port_connects_to_channel" VALUES(21,23);
+INSERT INTO "port_connects_to_channel" VALUES(19,24);
+INSERT INTO "port_connects_to_channel" VALUES(23,24);
+INSERT INTO "port_connects_to_channel" VALUES(22,25);
+INSERT INTO "port_connects_to_channel" VALUES(24,25);
+INSERT INTO "port_connects_to_channel" VALUES(13,26);
+INSERT INTO "port_connects_to_channel" VALUES(25,26);
+INSERT INTO "port_connects_to_channel" VALUES(26,27);
+INSERT INTO "port_connects_to_channel" VALUES(39,27);
+INSERT INTO "port_connects_to_channel" VALUES(15,28);
+INSERT INTO "port_connects_to_channel" VALUES(20,29);
+INSERT INTO "port_connects_to_channel" VALUES(9,30);
+INSERT INTO "port_connects_to_channel" VALUES(14,31);
+INSERT INTO "port_connects_to_channel" VALUES(10,32);
+INSERT INTO "port_connects_to_channel" VALUES(11,33);
+INSERT INTO "port_connects_to_channel" VALUES(16,34);
+INSERT INTO "port_connects_to_channel" VALUES(8,35);
+INSERT INTO "port_connects_to_channel" VALUES(40,36);
+INSERT INTO "port_connects_to_channel" VALUES(38,1);
+INSERT INTO "port_connects_to_channel" VALUES(27,2);
+INSERT INTO "port_connects_to_channel" VALUES(28,3);
+INSERT INTO "port_connects_to_channel" VALUES(29,4);
+INSERT INTO "port_connects_to_channel" VALUES(30,5);
+INSERT INTO "port_connects_to_channel" VALUES(32,5);
+INSERT INTO "port_connects_to_channel" VALUES(31,6);
+INSERT INTO "port_connects_to_channel" VALUES(33,6);
+INSERT INTO "port_connects_to_channel" VALUES(34,7);
+INSERT INTO "port_connects_to_channel" VALUES(36,7);
+INSERT INTO "port_connects_to_channel" VALUES(35,8);
+INSERT INTO "port_connects_to_channel" VALUES(37,8);
+INSERT INTO "port_connects_to_channel" VALUES(27,9);
+INSERT INTO "port_connects_to_channel" VALUES(28,10);
+INSERT INTO "port_connects_to_channel" VALUES(29,11);
+INSERT INTO "port_connects_to_channel" VALUES(38,12);
+CREATE TABLE inflow_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+INSERT INTO "inflow_connects_to_channel" VALUES(6,14);
+INSERT INTO "inflow_connects_to_channel" VALUES(3,15);
+INSERT INTO "inflow_connects_to_channel" VALUES(3,16);
+INSERT INTO "inflow_connects_to_channel" VALUES(4,17);
+INSERT INTO "inflow_connects_to_channel" VALUES(5,18);
+INSERT INTO "inflow_connects_to_channel" VALUES(5,19);
+INSERT INTO "inflow_connects_to_channel" VALUES(1,20);
+INSERT INTO "inflow_connects_to_channel" VALUES(2,22);
+INSERT INTO "inflow_connects_to_channel" VALUES(1,28);
+INSERT INTO "inflow_connects_to_channel" VALUES(2,29);
+INSERT INTO "inflow_connects_to_channel" VALUES(3,30);
+INSERT INTO "inflow_connects_to_channel" VALUES(3,31);
+INSERT INTO "inflow_connects_to_channel" VALUES(4,32);
+INSERT INTO "inflow_connects_to_channel" VALUES(5,33);
+INSERT INTO "inflow_connects_to_channel" VALUES(5,34);
+INSERT INTO "inflow_connects_to_channel" VALUES(6,35);
+INSERT INTO "inflow_connects_to_channel" VALUES(23,2);
+INSERT INTO "inflow_connects_to_channel" VALUES(24,3);
+INSERT INTO "inflow_connects_to_channel" VALUES(25,4);
+INSERT INTO "inflow_connects_to_channel" VALUES(23,9);
+INSERT INTO "inflow_connects_to_channel" VALUES(24,10);
+INSERT INTO "inflow_connects_to_channel" VALUES(25,11);
+CREATE TABLE outflow_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+INSERT INTO "outflow_connects_to_channel" VALUES(7,13);
+INSERT INTO "outflow_connects_to_channel" VALUES(7,36);
+INSERT INTO "outflow_connects_to_channel" VALUES(26,1);
+INSERT INTO "outflow_connects_to_channel" VALUES(26,12);
+CREATE TABLE cwl_steps_info(
+  "wf.wf_id" INT,
+  "s.program_id" INT,
+  "s.program_name" TEXT,
+  "p.port_name" TEXT,
+  "p.port_id" INT,
+  "p.port_type" INT,
+  "p.data_id" INT
+);
+INSERT INTO "cwl_steps_info" VALUES(1,2,'print_message','verbose',8,'IN',8);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','calibration_years',10,'IN',10);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','itrdb',9,'IN',9);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','max_preds',13,'OUT',13);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','min_width',11,'IN',11);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','predictor_matrix',12,'OUT',12);
+INSERT INTO "cwl_steps_info" VALUES(1,4,'get_reconstruction_matrix','itrdb',14,'IN',9);
+INSERT INTO "cwl_steps_info" VALUES(1,4,'get_reconstruction_matrix','min_width',16,'IN',11);
+INSERT INTO "cwl_steps_info" VALUES(1,4,'get_reconstruction_matrix','prediction_years',15,'IN',14);
+INSERT INTO "cwl_steps_info" VALUES(1,4,'get_reconstruction_matrix','reconstruction_matrix',17,'OUT',15);
+INSERT INTO "cwl_steps_info" VALUES(1,5,'get_predlist','predlist',19,'OUT',16);
+INSERT INTO "cwl_steps_info" VALUES(1,5,'get_predlist','reconstruction_matrix',18,'IN',15);
+INSERT INTO "cwl_steps_info" VALUES(1,6,'get_carscores','carscores',22,'OUT',18);
+INSERT INTO "cwl_steps_info" VALUES(1,6,'get_carscores','predictor_matrix',21,'IN',12);
+INSERT INTO "cwl_steps_info" VALUES(1,6,'get_carscores','prism_data_for_coordinates',20,'IN',17);
+INSERT INTO "cwl_steps_info" VALUES(1,7,'calculate_Models','carscores',24,'IN',18);
+INSERT INTO "cwl_steps_info" VALUES(1,7,'calculate_Models','linear_models',26,'OUT',19);
+INSERT INTO "cwl_steps_info" VALUES(1,7,'calculate_Models','max_preds',25,'IN',13);
+INSERT INTO "cwl_steps_info" VALUES(1,7,'calculate_Models','predlist',23,'IN',16);
+INSERT INTO "cwl_steps_info" VALUES(1,11,'optimizeModels','linear_models',39,'IN',19);
+INSERT INTO "cwl_steps_info" VALUES(1,11,'optimizeModels','paleocar_models',40,'OUT',28);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','carscores',28,'IN',21);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','matches',31,'OUT',24);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','max_preds',29,'IN',22);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','models',30,'OUT',23);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','predlist',27,'IN',20);
+INSERT INTO "cwl_steps_info" VALUES(7,9,'calculateLinearModels','coefficients',34,'OUT',25);
+INSERT INTO "cwl_steps_info" VALUES(7,9,'calculateLinearModels','matches',33,'IN',24);
+INSERT INTO "cwl_steps_info" VALUES(7,9,'calculateLinearModels','model_errors',35,'OUT',26);
+INSERT INTO "cwl_steps_info" VALUES(7,9,'calculateLinearModels','models',32,'IN',23);
+INSERT INTO "cwl_steps_info" VALUES(7,10,'simplifyLinearModels','coefficients',36,'IN',25);
+INSERT INTO "cwl_steps_info" VALUES(7,10,'simplifyLinearModels','final_models',38,'OUT',27);
+INSERT INTO "cwl_steps_info" VALUES(7,10,'simplifyLinearModels','model_errors',37,'IN',26);
+CREATE TABLE wf_ports(
+  program_id INT,
+  program_name TEXT,
+  port_name TEXT,
+  port_id INT,
+  port_type INT,
+  data_id INT
+);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','calibration_years',4,'IN',4);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','itrdb',3,'IN',3);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','min_width',5,'IN',5);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','paleocar_models',7,'OUT',7);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','prediction_years',1,'IN',1);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','prism_data_for_coordinates',2,'IN',2);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','verbose',6,'IN',6);
+INSERT INTO "wf_ports" VALUES(7,'calculate_Models','carscores',24,'IN',18);
+INSERT INTO "wf_ports" VALUES(7,'calculate_Models','linear_models',26,'OUT',19);
+INSERT INTO "wf_ports" VALUES(7,'calculate_Models','max_preds',25,'IN',13);
+INSERT INTO "wf_ports" VALUES(7,'calculate_Models','predlist',23,'IN',16);
+COMMIT;
+sqlite> .schema
+CREATE TABLE steps (
+                program_id      int     primary key not NULL ,
+                program_name      text,
+                qualified_program_name  text);
+CREATE TABLE workflow (
+                program_id      int     primary key not NULL
+                );
+CREATE TABLE has_subprogram (
+                program_id  int,
+                sub_program_id      int
+                );
+CREATE TABLE port (
+                port_id      int     primary key not NULL,
+                port_type  int,
+                port_name  text,
+                qualified_port_name text,
+                port_annotation_id int, 
+                data_id int 
+                );
+CREATE TABLE port_alias (
+                port_id    int  ,
+                alias    text
+                );
+CREATE TABLE has_in_port (
+                block_id int,
+                port_id    int
+                );
+CREATE TABLE has_out_port (
+                block_id int,
+                port_id    int
+                );
+CREATE TABLE data (
+                data_id int,
+                data_name    text,
+                qualified_data_name text
+                );
+CREATE TABLE channel (
+                channel_id int,
+                data_id    int
+                );
+CREATE TABLE port_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+CREATE TABLE inflow_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+CREATE TABLE outflow_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+CREATE TABLE cwl_steps_info(
+  "wf.wf_id" INT,
+  "s.program_id" INT,
+  "s.program_name" TEXT,
+  "p.port_name" TEXT,
+  "p.port_id" INT,
+  "p.port_type" INT,
+  "p.data_id" INT
+);
+CREATE TABLE wf_ports(
+  program_id INT,
+  program_name TEXT,
+  port_name TEXT,
+  port_id INT,
+  port_type INT,
+  data_id INT
+);
+sqlite> .quit
+[[34;1mdata[m [1m[32;1m:)[m]$                                                                                                                                                                   [[34;1mdata[m [1m[32;1m:)[m]$ ls
+sqlite-dump.txt	typescript	yw_model.db
+[[34;1mdata[m [1m[32;1m:)[m]$                                                                                                                                                                   [[34;1mdata[m [1m[32;1m:)[m]$ ext,
+                port_annotation_id int, 
+                data_id int 
+                );
+INSERT INTO "port" VALUES(1,'IN','prediction_years','paleocar_models<-prediction_years',3,1);
+INSERT INTO "port" VALUES(2,'IN','prism_data_for_coordinates','paleocar_models<-prism_data_for_coordinates',4,2);
+INSERT INTO "port" VALUES(3,'IN','itrdb','paleocar_models<-itrdb',5,3);
+INSERT INTO "port" VALUES(4,'IN','calibration_years','paleocar_models<-calibration_years',6,4);
+INSERT INTO "port" VALUES(5,'IN','min_width','paleocar_models<-min_width',7,5);
+INSERT INTO "port" VALUES(6,'IN','verbose','paleocar_models<-verbose',8,6);
+INSERT INTO "port" VALUES(7,'OUT','paleocar_models','paleocar_models->paleocar_models',9,7);
+INSERT INTO "port" VALUES(8,'IN','verbose','paleocar_models.print_message<-verbose',12,8);
+INSERT INTO "port" VALUES(9,'IN','itrdb','paleocar_models.get_predictor_matrix<-itrdb',16,9);
+INSERT INTO "port" VALUES(10,'IN','calibration_years','paleocar_models.get_predictor_matrix<-calibration_years',18,10);
+INSERT INTO "port" VALUES(11,'IN','min_width','paleocar_models.get_predictor_matrix<-min_width',19,11);
+INSERT INTO "port" VALUES(12,'OUT','predictor_matrix','paleocar_models.get_predictor_matrix->predictor_matrix',20,12);
+INSERT INTO "port" VALUES(13,'OUT','max_preds','paleocar_models.get_predictor_matrix->max_preds',21,13);
+INSERT INTO "port" VALUES(14,'IN','itrdb','paleocar_models.get_reconstruction_matrix<-itrdb',25,9);
+INSERT INTO "port" VALUES(15,'IN','prediction_years','paleocar_models.get_reconstruction_matrix<-prediction_years',27,14);
+INSERT INTO "port" VALUES(16,'IN','min_width','paleocar_models.get_reconstruction_matrix<-min_width',28,11);
+INSERT INTO "port" VALUES(17,'OUT','reconstruction_matrix','paleocar_models.get_reconstruction_matrix->reconstruction_matrix',29,15);
+INSERT INTO "port" VALUES(18,'IN','reconstruction_matrix','paleocar_models.get_predlist<-reconstruction_matrix',33,15);
+INSERT INTO "port" VALUES(19,'OUT','predlist','paleocar_models.get_predlist->predlist',34,16);
+INSERT INTO "port" VALUES(20,'IN','prism_data_for_coordinates','paleocar_models.get_carscores<-prism_data_for_coordinates',38,17);
+INSERT INTO "port" VALUES(21,'IN','predictor_matrix','paleocar_models.get_carscores<-predictor_matrix',40,12);
+INSERT INTO "port" VALUES(22,'OUT','carscores','paleocar_models.get_carscores->carscores',41,18);
+INSERT INTO "port" VALUES(23,'IN','predlist','paleocar_models.calculate_Models<-predlist',44,16);
+INSERT INTO "port" VALUES(24,'IN','carscores','paleocar_models.calculate_Models<-carscores',45,18);
+INSERT INTO "port" VALUES(25,'IN','max_preds','paleocar_models.calculate_Models<-max_preds',46,13);
+INSERT INTO "port" VALUES(26,'OUT','linear_models','paleocar_models.calculate_Models->linear_models',47,19);
+INSERT INTO "port" VALUES(27,'IN','predlist','paleocar_models.calculate_Models.defineLinearModels<-predlist',49,20);
+INSERT INTO "port" VALUES(28,'IN','carscores','paleocar_models.calculate_Models.defineLinearModels<-carscores',50,21);
+INSERT INTO "port" VALUES(29,'IN','max_preds','paleocar_models.calculate_Models.defineLinearModels<-max_preds',51,22);
+INSERT INTO "port" VALUES(30,'OUT','models','paleocar_models.calculate_Models.defineLinearModels->models',52,23);
+INSERT INTO "port" VALUES(31,'OUT','matches','paleocar_models.calculate_Models.defineLinearModels->matches',53,24);
+INSERT INTO "port" VALUES(32,'IN','models','paleocar_models.calculate_Models.calculateLinearModels<-models',56,23);
+INSERT INTO "port" VALUES(33,'IN','matches','paleocar_models.calculate_Models.calculateLinearModels<-matches',57,24);
+INSERT INTO "port" VALUES(34,'OUT','coefficients','paleocar_models.calculate_Models.calculateLinearModels->coefficients',58,25);
+INSERT INTO "port" VALUES(35,'OUT','model_errors','paleocar_models.calculate_Models.calculateLinearModels->model_errors',59,26);
+INSERT INTO "port" VALUES(36,'IN','coefficients','paleocar_models.calculate_Models.simplifyLinearModels<-coefficients',62,25);
+INSERT INTO "port" VALUES(37,'IN','model_errors','paleocar_models.calculate_Models.simplifyLinearModels<-model_errors',63,26);
+INSERT INTO "port" VALUES(38,'OUT','final_models','paleocar_models.calculate_Models.simplifyLinearModels->final_models',64,27);
+INSERT INTO "port" VALUES(39,'IN','linear_models','paleocar_models.optimizeModels<-linear_models',69,19);
+INSERT INTO "port" VALUES(40,'OUT','paleocar_models','paleocar_models.optimizeModels->paleocar_models',70,28);
+CREATE TABLE port_alias (
+                port_id    int  ,
+                alias    text
+                );
+INSERT INTO "port_alias" VALUES(38,'linear_models');
+CREATE TABLE has_in_port (
+                block_id int,
+                port_id    int
+                );
+INSERT INTO "has_in_port" VALUES(1,1);
+INSERT INTO "has_in_port" VALUES(1,2);
+INSERT INTO "has_in_port" VALUES(1,3);
+INSERT INTO "has_in_port" VALUES(1,4);
+INSERT INTO "has_in_port" VALUES(1,5);
+INSERT INTO "has_in_port" VALUES(1,6);
+INSERT INTO "has_in_port" VALUES(2,8);
+INSERT INTO "has_in_port" VALUES(3,9);
+INSERT INTO "has_in_port" VALUES(3,10);
+INSERT INTO "has_in_port" VALUES(3,11);
+INSERT INTO "has_in_port" VALUES(4,14);
+INSERT INTO "has_in_port" VALUES(4,15);
+INSERT INTO "has_in_port" VALUES(4,16);
+INSERT INTO "has_in_port" VALUES(5,18);
+INSERT INTO "has_in_port" VALUES(6,20);
+INSERT INTO "has_in_port" VALUES(6,21);
+INSERT INTO "has_in_port" VALUES(7,23);
+INSERT INTO "has_in_port" VALUES(7,24);
+INSERT INTO "has_in_port" VALUES(7,25);
+INSERT INTO "has_in_port" VALUES(8,27);
+INSERT INTO "has_in_port" VALUES(8,28);
+INSERT INTO "has_in_port" VALUES(8,29);
+INSERT INTO "has_in_port" VALUES(9,32);
+INSERT INTO "has_in_port" VALUES(9,33);
+INSERT INTO "has_in_port" VALUES(10,36);
+INSERT INTO "has_in_port" VALUES(10,37);
+INSERT INTO "has_in_port" VALUES(11,39);
+CREATE TABLE has_out_port (
+                block_id int,
+                port_id    int
+                );
+INSERT INTO "has_out_port" VALUES(1,7);
+INSERT INTO "has_out_port" VALUES(3,12);
+INSERT INTO "has_out_port" VALUES(3,13);
+INSERT INTO "has_out_port" VALUES(4,17);
+INSERT INTO "has_out_port" VALUES(5,19);
+INSERT INTO "has_out_port" VALUES(6,22);
+INSERT INTO "has_out_port" VALUES(7,26);
+INSERT INTO "has_out_port" VALUES(8,30);
+INSERT INTO "has_out_port" VALUES(8,31);
+INSERT INTO "has_out_port" VALUES(9,34);
+INSERT INTO "has_out_port" VALUES(9,35);
+INSERT INTO "has_out_port" VALUES(10,38);
+INSERT INTO "has_out_port" VALUES(11,40);
+CREATE TABLE data (
+                data_id int,
+                data_name    text,
+                qualified_data_name text
+                );
+CREATE TABLE channel (
+                channel_id int,
+                data_id    int
+                );
+INSERT INTO "channel" VALUES(13,7);
+INSERT INTO "channel" VALUES(14,8);
+INSERT INTO "channel" VALUES(15,9);
+INSERT INTO "channel" VALUES(16,9);
+INSERT INTO "channel" VALUES(17,10);
+INSERT INTO "channel" VALUES(18,11);
+INSERT INTO "channel" VALUES(19,11);
+INSERT INTO "channel" VALUES(20,14);
+INSERT INTO "channel" VALUES(21,15);
+INSERT INTO "channel" VALUES(22,17);
+INSERT INTO "channel" VALUES(23,12);
+INSERT INTO "channel" VALUES(24,16);
+INSERT INTO "channel" VALUES(25,18);
+INSERT INTO "channel" VALUES(26,13);
+INSERT INTO "channel" VALUES(27,19);
+INSERT INTO "channel" VALUES(28,1);
+INSERT INTO "channel" VALUES(29,2);
+INSERT INTO "channel" VALUES(30,3);
+INSERT INTO "channel" VALUES(31,3);
+INSERT INTO "channel" VALUES(32,4);
+INSERT INTO "channel" VALUES(33,5);
+INSERT INTO "channel" VALUES(34,5);
+INSERT INTO "channel" VALUES(35,6);
+INSERT INTO "channel" VALUES(36,28);
+INSERT INTO "channel" VALUES(1,19);
+INSERT INTO "channel" VALUES(2,20);
+INSERT INTO "channel" VALUES(3,21);
+INSERT INTO "channel" VALUES(4,22);
+INSERT INTO "channel" VALUES(5,23);
+INSERT INTO "channel" VALUES(6,24);
+INSERT INTO "channel" VALUES(7,25);
+INSERT INTO "channel" VALUES(8,26);
+INSERT INTO "channel" VALUES(9,16);
+INSERT INTO "channel" VALUES(10,18);
+INSERT INTO "channel" VALUES(11,13);
+INSERT INTO "channel" VALUES(12,27);
+CREATE TABLE port_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+INSERT INTO "port_connects_to_channel" VALUES(40,13);
+INSERT INTO "port_connects_to_channel" VALUES(8,14);
+INSERT INTO "port_connects_to_channel" VALUES(9,15);
+INSERT INTO "port_connects_to_channel" VALUES(14,16);
+INSERT INTO "port_connects_to_channel" VALUES(10,17);
+INSERT INTO "port_connects_to_channel" VALUES(11,18);
+INSERT INTO "port_connects_to_channel" VALUES(16,19);
+INSERT INTO "port_connects_to_channel" VALUES(15,20);
+INSERT INTO "port_connects_to_channel" VALUES(17,21);
+INSERT INTO "port_connects_to_channel" VALUES(18,21);
+INSERT INTO "port_connects_to_channel" VALUES(20,22);
+INSERT INTO "port_connects_to_channel" VALUES(12,23);
+INSERT INTO "port_connects_to_channel" VALUES(21,23);
+INSERT INTO "port_connects_to_channel" VALUES(19,24);
+INSERT INTO "port_connects_to_channel" VALUES(23,24);
+INSERT INTO "port_connects_to_channel" VALUES(22,25);
+INSERT INTO "port_connects_to_channel" VALUES(24,25);
+INSERT INTO "port_connects_to_channel" VALUES(13,26);
+INSERT INTO "port_connects_to_channel" VALUES(25,26);
+INSERT INTO "port_connects_to_channel" VALUES(26,27);
+INSERT INTO "port_connects_to_channel" VALUES(39,27);
+INSERT INTO "port_connects_to_channel" VALUES(15,28);
+INSERT INTO "port_connects_to_channel" VALUES(20,29);
+INSERT INTO "port_connects_to_channel" VALUES(9,30);
+INSERT INTO "port_connects_to_channel" VALUES(14,31);
+INSERT INTO "port_connects_to_channel" VALUES(10,32);
+INSERT INTO "port_connects_to_channel" VALUES(11,33);
+INSERT INTO "port_connects_to_channel" VALUES(16,34);
+INSERT INTO "port_connects_to_channel" VALUES(8,35);
+INSERT INTO "port_connects_to_channel" VALUES(40,36);
+INSERT INTO "port_connects_to_channel" VALUES(38,1);
+INSERT INTO "port_connects_to_channel" VALUES(27,2);
+INSERT INTO "port_connects_to_channel" VALUES(28,3);
+INSERT INTO "port_connects_to_channel" VALUES(29,4);
+INSERT INTO "port_connects_to_channel" VALUES(30,5);
+INSERT INTO "port_connects_to_channel" VALUES(32,5);
+INSERT INTO "port_connects_to_channel" VALUES(31,6);
+INSERT INTO "port_connects_to_channel" VALUES(33,6);
+INSERT INTO "port_connects_to_channel" VALUES(34,7);
+INSERT INTO "port_connects_to_channel" VALUES(36,7);
+INSERT INTO "port_connects_to_channel" VALUES(35,8);
+INSERT INTO "port_connects_to_channel" VALUES(37,8);
+INSERT INTO "port_connects_to_channel" VALUES(27,9);
+INSERT INTO "port_connects_to_channel" VALUES(28,10);
+INSERT INTO "port_connects_to_channel" VALUES(29,11);
+INSERT INTO "port_connects_to_channel" VALUES(38,12);
+CREATE TABLE inflow_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+INSERT INTO "inflow_connects_to_channel" VALUES(6,14);
+INSERT INTO "inflow_connects_to_channel" VALUES(3,15);
+INSERT INTO "inflow_connects_to_channel" VALUES(3,16);
+INSERT INTO "inflow_connects_to_channel" VALUES(4,17);
+INSERT INTO "inflow_connects_to_channel" VALUES(5,18);
+INSERT INTO "inflow_connects_to_channel" VALUES(5,19);
+INSERT INTO "inflow_connects_to_channel" VALUES(1,20);
+INSERT INTO "inflow_connects_to_channel" VALUES(2,22);
+INSERT INTO "inflow_connects_to_channel" VALUES(1,28);
+INSERT INTO "inflow_connects_to_channel" VALUES(2,29);
+INSERT INTO "inflow_connects_to_channel" VALUES(3,30);
+INSERT INTO "inflow_connects_to_channel" VALUES(3,31);
+INSERT INTO "inflow_connects_to_channel" VALUES(4,32);
+INSERT INTO "inflow_connects_to_channel" VALUES(5,33);
+INSERT INTO "inflow_connects_to_channel" VALUES(5,34);
+INSERT INTO "inflow_connects_to_channel" VALUES(6,35);
+INSERT INTO "inflow_connects_to_channel" VALUES(23,2);
+INSERT INTO "inflow_connects_to_channel" VALUES(24,3);
+INSERT INTO "inflow_connects_to_channel" VALUES(25,4);
+INSERT INTO "inflow_connects_to_channel" VALUES(23,9);
+INSERT INTO "inflow_connects_to_channel" VALUES(24,10);
+INSERT INTO "inflow_connects_to_channel" VALUES(25,11);
+CREATE TABLE outflow_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+INSERT INTO "outflow_connects_to_channel" VALUES(7,13);
+INSERT INTO "outflow_connects_to_channel" VALUES(7,36);
+INSERT INTO "outflow_connects_to_channel" VALUES(26,1);
+INSERT INTO "outflow_connects_to_channel" VALUES(26,12);
+CREATE TABLE cwl_steps_info(
+  "wf.wf_id" INT,
+  "s.program_id" INT,
+  "s.program_name" TEXT,
+  "p.port_name" TEXT,
+  "p.port_id" INT,
+  "p.port_type" INT,
+  "p.data_id" INT
+);
+INSERT INTO "cwl_steps_info" VALUES(1,2,'print_message','verbose',8,'IN',8);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','calibration_years',10,'IN',10);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','itrdb',9,'IN',9);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','max_preds',13,'OUT',13);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','min_width',11,'IN',11);
+INSERT INTO "cwl_steps_info" VALUES(1,3,'get_predictor_matrix','predictor_matrix',12,'OUT',12);
+INSERT INTO "cwl_steps_info" VALUES(1,4,'get_reconstruction_matrix','itrdb',14,'IN',9);
+INSERT INTO "cwl_steps_info" VALUES(1,4,'get_reconstruction_matrix','min_width',16,'IN',11);
+INSERT INTO "cwl_steps_info" VALUES(1,4,'get_reconstruction_matrix','prediction_years',15,'IN',14);
+INSERT INTO "cwl_steps_info" VALUES(1,4,'get_reconstruction_matrix','reconstruction_matrix',17,'OUT',15);
+INSERT INTO "cwl_steps_info" VALUES(1,5,'get_predlist','predlist',19,'OUT',16);
+INSERT INTO "cwl_steps_info" VALUES(1,5,'get_predlist','reconstruction_matrix',18,'IN',15);
+INSERT INTO "cwl_steps_info" VALUES(1,6,'get_carscores','carscores',22,'OUT',18);
+INSERT INTO "cwl_steps_info" VALUES(1,6,'get_carscores','predictor_matrix',21,'IN',12);
+INSERT INTO "cwl_steps_info" VALUES(1,6,'get_carscores','prism_data_for_coordinates',20,'IN',17);
+INSERT INTO "cwl_steps_info" VALUES(1,7,'calculate_Models','carscores',24,'IN',18);
+INSERT INTO "cwl_steps_info" VALUES(1,7,'calculate_Models','linear_models',26,'OUT',19);
+INSERT INTO "cwl_steps_info" VALUES(1,7,'calculate_Models','max_preds',25,'IN',13);
+INSERT INTO "cwl_steps_info" VALUES(1,7,'calculate_Models','predlist',23,'IN',16);
+INSERT INTO "cwl_steps_info" VALUES(1,11,'optimizeModels','linear_models',39,'IN',19);
+INSERT INTO "cwl_steps_info" VALUES(1,11,'optimizeModels','paleocar_models',40,'OUT',28);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','carscores',28,'IN',21);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','matches',31,'OUT',24);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','max_preds',29,'IN',22);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','models',30,'OUT',23);
+INSERT INTO "cwl_steps_info" VALUES(7,8,'defineLinearModels','predlist',27,'IN',20);
+INSERT INTO "cwl_steps_info" VALUES(7,9,'calculateLinearModels','coefficients',34,'OUT',25);
+INSERT INTO "cwl_steps_info" VALUES(7,9,'calculateLinearModels','matches',33,'IN',24);
+INSERT INTO "cwl_steps_info" VALUES(7,9,'calculateLinearModels','model_errors',35,'OUT',26);
+INSERT INTO "cwl_steps_info" VALUES(7,9,'calculateLinearModels','models',32,'IN',23);
+INSERT INTO "cwl_steps_info" VALUES(7,10,'simplifyLinearModels','coefficients',36,'IN',25);
+INSERT INTO "cwl_steps_info" VALUES(7,10,'simplifyLinearModels','final_models',38,'OUT',27);
+INSERT INTO "cwl_steps_info" VALUES(7,10,'simplifyLinearModels','model_errors',37,'IN',26);
+CREATE TABLE wf_ports(
+  program_id INT,
+  program_name TEXT,
+  port_name TEXT,
+  port_id INT,
+  port_type INT,
+  data_id INT
+);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','calibration_years',4,'IN',4);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','itrdb',3,'IN',3);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','min_width',5,'IN',5);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','paleocar_models',7,'OUT',7);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','prediction_years',1,'IN',1);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','prism_data_for_coordinates',2,'IN',2);
+INSERT INTO "wf_ports" VALUES(1,'paleocar_models','verbose',6,'IN',6);
+INSERT INTO "wf_ports" VALUES(7,'calculate_Models','carscores',24,'IN',18);
+INSERT INTO "wf_ports" VALUES(7,'calculate_Models','linear_models',26,'OUT',19);
+INSERT INTO "wf_ports" VALUES(7,'calculate_Models','max_preds',25,'IN',13);
+INSERT INTO "wf_ports" VALUES(7,'calculate_Models','predlist',23,'IN',16);
+COMMIT;
+sqlite> .schema
+CREATE TABLE steps (
+                program_id      int     primary key not NULL ,
+                program_name      text,
+                qualified_program_name  text);
+CREATE TABLE workflow (
+                program_id      int     primary key not NULL
+                );
+CREATE TABLE has_subprogram (
+                program_id  int,
+                sub_program_id      int
+                );
+CREATE TABLE port (
+                port_id      int     primary key not NULL,
+                port_type  int,
+                port_name  text,
+                qualified_port_name text,
+                port_annotation_id int, 
+                data_id int 
+                );
+CREATE TABLE port_alias (
+                port_id    int  ,
+                alias    text
+                );
+CREATE TABLE has_in_port (
+                block_id int,
+                port_id    int
+                );
+CREATE TABLE has_out_port (
+                block_id int,
+                port_id    int
+                );
+CREATE TABLE data (
+                data_id int,
+                data_name    text,
+                qualified_data_name text
+                );
+CREATE TABLE channel (
+                channel_id int,
+                data_id    int
+                );
+CREATE TABLE port_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+CREATE TABLE inflow_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+CREATE TABLE outflow_connects_to_channel (
+                port_id int,
+                channel_id    int
+                );
+CREATE TABLE cwl_steps_info(
+  "wf.wf_id" INT,
+  "s.program_id" INT,
+  "s.program_name" TEXT,
+  "p.port_name" TEXT,
+  "p.port_id" INT,
+  "p.port_type" INT,
+  "p.data_id" INT
+);
+CREATE TABLE wf_ports(
+  program_id INT,
+  program_name TEXT,
+  port_name TEXT,
+  port_id INT,
+  port_type INT,
+  data_id INT
+);
+sqlite> .quit
+[[34;1mdata[m [1m[32;1m:)[m]$                                                                                                                                                                   [[34;1mdata[m [1m[32;1m:)[m]$ ls
+sqlite-dump.txt	typescript	yw_model.db
+[[34;1mdata[m [1m[32;1m:)[m]$                                                                                                                                                                   [[34;1mdata[m [1m[32;1m:)[m]$ 
