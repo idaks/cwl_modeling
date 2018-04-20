@@ -64,39 +64,39 @@ steps:
  download_shapefile_archive: 
   run: download_shapefile_archive.cwl 
   in: 
-   dir: dir
+   dir: create_shapefile_dir/user_created_dir
    file_archive: shapefile_archive
   out: [compressed_shapefile] 
  uncompress_shapefile: 
   run: uncompress_shapefile.cwl 
   in: 
-   dir_name: study_region
-   zipfile: zipfile
+   dir_name: create_shapefile_dir/user_created_dir
+   zipfile: download_shapefile_archive/compressed_shapefile
   out: [layer_boundary,layer_tracts,metadata_xml_file,shapefiles_dir,tracts_xml_file] 
  read_shapefile: 
   run: read_shapefile.cwl 
   in: 
-   dir: dir
-   layer: layer
+   dir: uncompress_shapefile/shapefiles_dir
+   layer: uncompress_shapefile/layer_boundary
   out: [dataobject] 
  get_treepolygon: 
   run: get_treepolygon.cwl 
   in: 
-   polygon: polygon
-   quadsegs: quadsegs
-   width: width
+   polygon: read_shapefile/dataobject
+   quadsegs: _YW_IN_quadsegs
+   width: _YW_IN_width
   out: [template] 
  extract_tree_ring_data: 
   run: extract_tree_ring_data.cwl 
   in: 
-   calib_years: calib_years
-   chronology_type: chronology_type
-   extraction_dir: extraction_dir
-   force_redo: force_redo
-   label: label
-   measurement_type: measurement_type
-   polygon: polygon
+   calib_years: _YW_IN_calib_years
+   chronology_type: _YW_IN_chronology_type
+   extraction_dir: _YW_IN_extraction_dir
+   force_redo: _YW_IN_force_redo
+   label: _YW_IN_label
+   measurement_type: _YW_IN_measurement_type
+   polygon: get_treepolygon/template
    prediction_years: prediction_years
-   raw_dir: raw_dir
+   raw_dir: _YW_IN_raw_dir
   out: [list] 
  

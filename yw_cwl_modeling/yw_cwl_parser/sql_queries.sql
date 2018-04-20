@@ -16,9 +16,9 @@ drop table wf_ports ;
 
 create table cwl_steps_info as 
 select 
-	wf.wf_id as wf_id, s.program_id as program_id, s.program_name as program_name, p.port_name as port_name
-	, p.port_id as port_id, p.port_type as port_type, p.data_id   as data_id 
-from  
+	wf.wf_id as workflow_id , s.program_id as program_id, s.program_name as program_name,
+	p.port_name as port_name, p.port_id as port_id, p.port_type as port_type , p.data_id as data_id   
+from 
 	steps s, port p, has_in_port inp, 
 	(select 
 		sub_program_id  , program_id as wf_id 
@@ -31,8 +31,8 @@ and	p.port_id = inp.port_id
 and inp.block_id  = wf.sub_program_id
 union 
 select 
-	wf.wf_id as wf_id, s.program_id as program_id, s.program_name as program_name, p.port_name as port_name
-	, p.port_id as port_id, p.port_type as port_type, p.data_id   as data_id 
+	wf.wf_id as workflow_id , s.program_id as program_id, s.program_name as program_name,
+	p.port_name as port_name, p.port_id as port_id, p.port_type as port_type , p.data_id as data_id 
 from 
 	steps s, port p, has_out_port out,
 	(select 
@@ -44,7 +44,6 @@ where
 	s.program_id = out.block_id
 and	p.port_id = out.port_id 
 and out.block_id = wf.sub_program_id
-
 ; 
 
 ###  table for the wf ports 
@@ -81,28 +80,53 @@ and out.block_id in
 
 ### table for programs with qualified portname 
 
+
+
 create table qual_portname as 
 select 
-	p.program_name, p.port_name , q.port_name as qualified_portname, p.port_type , p.data_id
+	p.workflow_id, p.port_id, p.program_name, p.port_name , q.port_name as qualified_portname, p.port_type , p.data_id
 from
 	cwl_steps_info p, wf_ports q
- where upper(p.port_type) in ('IN', 'PARAM')
+ where upper(p.port_type) in ('IN')
  and p.port_name = q.port_name
  union
 select 
-	p.program_name, p.port_name , q.port_name as qualified_portname, p.port_type, p.data_id
+	p.workflow_id, p.port_id, p.program_name, p.port_name , q.port_name as qualified_portname, p.port_type, p.data_id
 from
 	cwl_steps_info p, wf_ports q, port_alias pa
- where upper(p.port_type) in ('IN', 'PARAM') 
+ where upper(p.port_type) in ('IN') 
  and p.port_id = pa.port_id
  and pa.alias = q.port_name
 union 
 select
-	p.program_name, p.port_name, p.program_name || '/' || p.port_name as qualified_portname, p.port_type , p.data_id
+	p.workflow_id, p.port_id, p.program_name, p.port_name, p.program_name || '/' || p.port_name as qualified_portname, p.port_type , p.data_id
 from
 	cwl_steps_info p
 where upper(p.port_type)= 'OUT'
 ;
+
+
+### ports related qualified portname; 
+select 
+	distinct p.program_id as workflow_id,  p.port_id,  p.program_name, p.port_name ,p.port_name as qualified_portname, p.port_type , p.data_id
+from
+	wf_ports p, inflow_connects_to_channel q
+ where upper(p.port_type) in ('IN')
+ and p.port_id = q.port_id
+union 
+select
+	p.workflow_id, p.port_id, p.program_name, p.port_name, p.program_name || '/' || p.port_name as qualified_portname, p.port_type , p.data_id
+from
+	cwl_steps_info p
+where upper(p.port_type)= 'OUT'
+union
+select
+	p.program_id as workflow_id, p.port_id, p.program_name, p.port_name, p.port_name as qualified_portname, p.port_type , p.data_id
+from
+	wf_ports p, port po
+where p.port_id = po.port_id 
+and upper(po.port_name) like '_YW_IN%'
+
 
 
 ### Qualified WF output ports ### 
