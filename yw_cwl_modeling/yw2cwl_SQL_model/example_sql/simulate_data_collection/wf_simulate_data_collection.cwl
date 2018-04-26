@@ -33,7 +33,7 @@ outputs:
    outputSource: log_rejected_sample/rejection_log
   run_log: 
    type: string 
-   outputSource: transform_images/run_log
+   outputSource: _YW_PROG_12/_YW_OUT_YW_PROG_12
 steps: 
  initialize_run: 
   run: initialize_run.cwl 
@@ -88,4 +88,12 @@ steps:
    sample_id: collect_data_set/sample_id
    total_intensity: transform_images/total_intensity
   out: [collection_log] 
+ _YW_PROG_12: 
+  run: _YW_PROG_12.cwl 
+  in: 
+   _YW_IN_run_log_76: initialize_run/run_log
+   _YW_IN_run_log_77: load_screening_results/run_log
+   _YW_IN_run_log_78: collect_data_set/run_log
+   _YW_IN_run_log_79: transform_images/run_log
+  out: [_YW_OUT_YW_PROG_12] 
  
