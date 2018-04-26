@@ -2,26 +2,23 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- input1_data: 
+ Grass_variable: 
+  type: string 
+ 
+ lat_bnds_variable: 
+  type: string 
+ 
+ lat_variable: 
+  type: string 
+ 
+ lon_bnds_variable: 
+  type: string 
+ 
+ lon_variable: 
   type: string 
  
 outputs: 
- RecordID: 
-  type: string 
- 
- name_val_log: 
-  type: string 
- 
- original_authorship: 
-  type: string 
- 
- original_others: 
-  type: string 
- 
- original_scientificName: 
-  type: string 
- 
- record_id_data: 
+ Grass_fraction_data: 
   type: string 
  
 baseCommand: 

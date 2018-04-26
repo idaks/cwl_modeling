@@ -2,11 +2,11 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- local_authority_source: 
+ mean_airtemp: 
   type: string 
  
 outputs: 
- local_authority_source_scientificName_lst: 
+ Tair: 
   type: string 
  
 baseCommand: 

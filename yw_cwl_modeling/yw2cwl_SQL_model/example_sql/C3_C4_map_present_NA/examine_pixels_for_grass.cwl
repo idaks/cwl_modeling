@@ -2,11 +2,17 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- local_authority_source: 
+ Rain: 
+  type: string 
+ 
+ Tair: 
   type: string 
  
 outputs: 
- local_authority_source_scientificName_lst: 
+ C3: 
+  type: string 
+ 
+ C4: 
   type: string 
  
 baseCommand: 

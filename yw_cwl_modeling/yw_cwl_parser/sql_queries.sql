@@ -16,8 +16,8 @@ drop table wf_ports ;
 
 create table cwl_steps_info as 
 select 
-	wf.wf_id as workflow_id , s.program_id as program_id, s.program_name as program_name,
-	p.port_name as port_name, p.port_id as port_id, p.port_type as port_type , p.data_id as data_id   
+	wf.wf_id as workflow_id , s.program_id as program_id, s.program_name as program_name, 
+	p.port_name as port_name, p.qualified_port_name as qualified_port_name ,p.port_id as port_id, p.port_type as port_type , p.data_id as data_id   
 from 
 	steps s, port p, has_in_port inp, 
 	(select 
@@ -32,7 +32,7 @@ and inp.block_id  = wf.sub_program_id
 union 
 select 
 	wf.wf_id as workflow_id , s.program_id as program_id, s.program_name as program_name,
-	p.port_name as port_name, p.port_id as port_id, p.port_type as port_type , p.data_id as data_id 
+	p.port_name as port_name, p.port_id as port_id,p.qualified_port_name as qualified_port_name , p.port_type as port_type , p.data_id as data_id 
 from 
 	steps s, port p, has_out_port out,
 	(select 
@@ -177,7 +177,7 @@ select
 	p.qualified_port_name, p.port_name,  p.port_name as qualified_portname, p.port_type , p.data_id
 from 
 	port p 
-where p.port_name like '_YW_%'
+where p.port_name like '_YW_OUT%'
 ;
 
 ### Select dangling ports which are not linked to global input or output 
@@ -196,7 +196,20 @@ where data_id in
 )
 
 
-	EXCEPT
-	select distinct data_id from qual_portname where port_type = 'OUT'
-	EXCEPT
-	select distinct data_id from wf_ports where port_type = 'IN'
+
+## Get the program_name and the port_name for multiple writers
+select 
+	cwf.workflow_id as workflow_id , cwf.program_id as program_id, cwf.program_name as program_name,cwf.port_name as port_name, cwf.port_id as port_id, cwf.port_type as port_type , cwf.data_id as data_id 
+from 
+	cwl_steps_info cwf
+where port_type = 'OUT'
+and cwf.data_id in 
+	(
+	select 
+		data_id
+	from 
+		cwl_steps_info
+	where port_type ='OUT'
+	group by data_id
+	having count(1) > 1
+	)

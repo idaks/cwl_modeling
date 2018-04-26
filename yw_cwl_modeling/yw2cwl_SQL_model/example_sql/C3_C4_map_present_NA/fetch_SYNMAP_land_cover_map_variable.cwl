@@ -2,11 +2,20 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- local_authority_source: 
+ SYNMAP_land_cover_map_data: 
   type: string 
  
 outputs: 
- local_authority_source_scientificName_lst: 
+ lat: 
+  type: string 
+ 
+ lat_bnds: 
+  type: string 
+ 
+ lon: 
+  type: string 
+ 
+ lon_bnds: 
   type: string 
  
 baseCommand: 

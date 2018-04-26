@@ -1,7 +1,6 @@
-
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-class: CommandLineTool
+#!/usr/bin/env cwl-runner 
+cwlVersion: v1.0 
+class: CommandLineTool 
 inputs: 
  local_authority_source_scientificName_lst: 
   type: string 

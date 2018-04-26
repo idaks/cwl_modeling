@@ -2,11 +2,11 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- local_authority_source: 
+ _YW_IN_initialize_Grass_Matrix: 
   type: string 
  
 outputs: 
- local_authority_source_scientificName_lst: 
+ Grass: 
   type: string 
  
 baseCommand: 

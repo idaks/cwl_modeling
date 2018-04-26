@@ -1,10 +1,8 @@
-
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-class: Workflow
-requirements:
-    - class: SubworkflowFeatureRequirement
-
+#!/usr/bin/env cwl-runner 
+cwlVersion: v1.0 
+class: Workflow 
+requirements: 
+  - class: SubworkflowFeatureRequirement 
 inputs: 
  _YW_IN_input2_data: 
   type: string 

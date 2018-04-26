@@ -2,11 +2,11 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- local_authority_source: 
+ mean_precip: 
   type: string 
  
 outputs: 
- local_authority_source_scientificName_lst: 
+ Rain: 
   type: string 
  
 baseCommand: 

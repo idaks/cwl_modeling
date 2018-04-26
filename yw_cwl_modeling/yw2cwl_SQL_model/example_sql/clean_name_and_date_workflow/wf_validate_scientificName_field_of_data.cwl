@@ -1,10 +1,8 @@
-
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-class: Workflow
-requirements:
-    - class: SubworkflowFeatureRequirement
-
+#!/usr/bin/env cwl-runner 
+cwlVersion: v1.0 
+class: Workflow 
+requirements: 
+  - class: SubworkflowFeatureRequirement 
 inputs: 
  input1_data: 
   type: string 
@@ -24,7 +22,7 @@ outputs:
    outputSource: find_matching_local_authority_source_record/matching_method
   name_val_log: 
    type: string 
-   outputSource: log_summary/name_val_log
+   outputSource: _YW_PROG_30/_YW_OUT_YW_PROG_30
   output1_data: 
    type: string 
    outputSource: write_output1_data/output1_data
@@ -114,4 +112,31 @@ steps:
    accepted_record_count: log_accepted_record/accepted_record_count
    rejected_record_count: log_rejected_record/rejected_record_count
   out: [name_val_log] 
+ _YW_PROG_30: 
+  run: _YW_PROG_30.cwl 
+  in: 
+   _YW_IN_date_val_log_148: _YW_IN_date_val_log_148
+   _YW_IN_date_val_log_149: _YW_IN_date_val_log_149
+   _YW_IN_date_val_log_150: _YW_IN_date_val_log_150
+   _YW_IN_date_val_log_151: _YW_IN_date_val_log_151
+   _YW_IN_date_val_log_153: _YW_IN_date_val_log_153
+   _YW_IN_date_val_log_154: _YW_IN_date_val_log_154
+   _YW_IN_date_val_log_155: _YW_IN_date_val_log_155
+   _YW_IN_date_val_log_157: _YW_IN_date_val_log_157
+   _YW_IN_final_result_138: log_rejected_record/final_result
+   _YW_IN_final_result_141: find_matching_local_authority_source_record/final_result
+   _YW_IN_final_result_152: _YW_IN_final_result_152
+   _YW_IN_final_result_156: _YW_IN_final_result_156
+   _YW_IN_name_val_log_135: initialize_run/name_val_log
+   _YW_IN_name_val_log_136: read_input1_data_records/name_val_log
+   _YW_IN_name_val_log_137: check_empty_value/name_val_log
+   _YW_IN_name_val_log_139: log_rejected_record/name_val_log
+   _YW_IN_name_val_log_142: find_matching_local_authority_source_record/name_val_log
+   _YW_IN_name_val_log_143: log_rejected_unmatching_record/name_val_log
+   _YW_IN_name_val_log_145: log_updated_record/name_val_log
+   _YW_IN_name_val_log_146: log_accepted_record/name_val_log
+   _YW_IN_name_val_log_147: log_summary/name_val_log
+   _YW_IN_rejected_record_count_140: log_rejected_record/rejected_record_count
+   _YW_IN_rejected_record_count_144: log_rejected_unmatching_record/rejected_record_count
+  out: [_YW_OUT_YW_PROG_30] 
  

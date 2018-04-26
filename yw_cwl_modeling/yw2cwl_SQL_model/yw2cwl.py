@@ -586,6 +586,37 @@ def create_DataFrames(reload):
 
 	return df_tuple
 
+## Add an input port in the ports tables
+def ins_in_port(program_name):
+	wf_id = cwl_file_df[cwl_file_df['program_name'] == program_name]['workflow_id'].values[0]
+	prog_id = cwl_file_df[cwl_file_df['program_name'] == program_name]['program_id'].values[0]
+	port_id = cwl_file_df['port_id'].max() + 1
+	data_id = cwl_file_df['data_id'].max() + 1
+	#print(port_id, data_id)
+	port_type = 'IN'
+	port_name = '_YW_IN_'+ program_name
+	qual_prog_name = program_name + '/' + port_name
+	sql = """
+	insert into port values (?,?,?,?,?,?)
+	"""
+	data = [int(port_id), port_type, port_name,port_name,port_id,int(data_id)]
+	conn.execute(sql,data)
+
+	sql = """
+	insert into has_in_port values (?,?)
+	"""
+	data = [int(wf_id),int(port_id)]
+	#print(data)
+	conn.execute(sql,data)
+	data = [int(prog_id),int(port_id)]
+	#print(data)    
+	conn.execute(sql,data)
+	conn.commit()
+
+
+
+
+
 ## Add an output port in the ports tables
 def ins_out_port(program_name):
     wf_id = cwl_file_df[cwl_file_df['program_name'] == program_name]['workflow_id'].values[0]
@@ -692,7 +723,16 @@ def chk_prog_wo_output_port():
 	    print(prog)
 	    ins_out_port(prog)
 
-
+### Check for the programs without output ports
+### use the ins_in_port to create the output port for wf and prog. 
+def chk_prog_wo_input_port():
+	program_name_uniq = cwl_file_df['program_name'].unique()
+	program_with_in  = cwl_file_df[cwl_file_df['port_type'] == 'IN']["program_name"].unique()
+	prog_wo_inport  =list(set(program_name_uniq).difference(set(program_with_in)))
+	
+	for prog in prog_wo_inport:
+	    print(prog)
+	    ins_in_port(prog)
 
 def reload_dataframe():
 ### Reload the dataframes now 
@@ -747,7 +787,10 @@ def get_wf_steps(workflow_id):
                 
                 if len(qn_df) == 0 :
                     alias = df_port_alias[df_port_alias["port_id"]==port_id]['alias']
-                    if len(alias) != 0 :
+                    wf_in_port = wf_port_df[wf_port_df["port_name"] ==port_name].values[0] 
+                    if len(wf_in_port) != 0:
+                        qname = port_name                   
+                    elif len(alias) != 0 :
                         qname = alias.values[0]
                     else:
                         qname = port_name
@@ -1020,14 +1063,22 @@ print_footer()
 #@begin create_missing_cwl_ports
 #@in dataFrames
 print("+" * 100)
-print("Check for the dangling ports and create the entries in the port and respective realtions. ")
-check_danglingports()
+print("Check for the program without input ports and create the entries in the port and respective realtions. ")
+chk_prog_wo_input_port()
 print_footer()
+
+
 
 print("+" * 100)
 print("Check for the program without output ports and create the entries in the port and respective realtions. ")
 chk_prog_wo_output_port()
 print_footer()
+
+print("+" * 100)
+print("Check for the dangling ports and create the entries in the port and respective realtions. ")
+check_danglingports()
+print_footer()
+
 #@out yw_tables
 #@end create_missing_cwl_ports
 
