@@ -1,5 +1,0 @@
-dir: "/Users/pratikshrivastava/Desktop/Box/GitHub/cwl_modeling/yw_cwl_modeling/"
-study_region: 'GRCA'
-file_name: 
- class: File 
- path: "GRCA/GRCA_tracts.zip"

@@ -1,4 +1,0 @@
-dir: "/Users/pratikshrivastava/Desktop/Box/GitHub/cwl_modeling/yw_cwl_modeling/"
-study_region: 'GRCA'
-url: "http://nrdata.nps.gov/programs/Lands/GRCA_tracts.zip"
-itrdb_rds: itrdb.Rda

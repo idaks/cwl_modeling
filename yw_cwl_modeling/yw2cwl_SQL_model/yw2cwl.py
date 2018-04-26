@@ -375,7 +375,7 @@ def create_DataFrames(reload):
 	sql_steps_in_out_ports = '''
 	select 
 		wf.wf_id as workflow_id , s.program_id as program_id, s.program_name as program_name,
-		p.port_name as port_name, p.port_id as port_id, p.port_type as port_type , p.data_id as data_id   
+		p.port_name as port_name, p.qualified_port_name as qname, p.port_id as port_id, p.port_type as port_type , p.data_id as data_id   
 	from 
 		steps s, port p, has_in_port inp, 
 		(select 
@@ -390,7 +390,7 @@ def create_DataFrames(reload):
 	union 
 	select 
 		wf.wf_id as workflow_id , s.program_id as program_id, s.program_name as program_name,
-		p.port_name as port_name, p.port_id as port_id, p.port_type as port_type , p.data_id as data_id 
+		p.port_name as port_name,p.qualified_port_name as qname, p.port_id as port_id, p.port_type as port_type , p.data_id as data_id 
 	from 
 		steps s, port p, has_out_port out,
 		(select 
@@ -454,7 +454,7 @@ def create_DataFrames(reload):
 	from
 		wf_ports p, port po
 	where p.port_id = po.port_id 
-	and upper(po.port_name) like '_YW_IN%'
+	and upper(po.port_name) like '_YW_IN%'	
 	'''
 
 	sql_wf_qual_out_port = '''
@@ -525,27 +525,64 @@ def create_DataFrames(reload):
 	select 
 	    port_id, alias
 	from 
-	    port_alias'''
+	    port_alias
+	 '''
+
+
+	sql_multiwriter_port = '''
+	select 
+		cwf.workflow_id as workflow_id , cwf.program_id as program_id, cwf.program_name as program_name,cwf.port_name as port_name, cwf.port_id as port_id, cwf.port_type as port_type , cwf.data_id as data_id 
+	from 
+		cwl_steps_info cwf
+	where port_type = 'OUT'
+	and cwf.data_id in 
+		(
+		select 
+			data_id
+		from 
+			cwl_steps_info
+		where port_type ='OUT'
+		group by data_id
+		having count(1) > 1
+		)
+	'''
+	sql_data = """
+	select 
+	    * 
+	from 
+	    data
+	"""
 
 	
 	if reload:
+		conn.execute (''' drop table if exists cwl_steps_info ''')
+		conn.execute (''' drop table if exists wf_ports ''')
+		conn.execute (''' drop table if exists qual_portname ''')
+		
+		conn.execute('create table cwl_steps_info as ' + sql_steps_in_out_ports)
 		conn.execute('create table wf_ports as ' + sql_wf_ports)
 		conn.execute('create table qual_portname as ' + sql_qual_portname)
+
 		cwl_file_df = pd.read_sql_query(sql_steps_in_out_ports, con=conn)
 		wf_port_df = pd.read_sql_query(sql_wf_ports, con=conn)
 		df_dangling_ports = pd.read_sql_query(sql_dangling_port_id, con=conn)
 		df_port_alias = pd.read_sql_query(sql_port_alias, con=conn)
 		qual_portname = pd.read_sql_query(sql_qual_portname, con=conn)
 		qual_wf_out_port = pd.read_sql_query(sql_wf_qual_out_port, con=conn)
+		df_multiwriter_port= pd.read_sql_query(sql_multiwriter_port, con=conn)
+		df_data= pd.read_sql_query(sql_data, con=conn)
 
-		df_tuple = (cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias, qual_portname ,qual_wf_out_port)
+		df_tuple = (cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias, qual_portname ,qual_wf_out_port,df_multiwriter_port,df_data)
 	else:
 		conn.execute('create table cwl_steps_info as ' + sql_steps_in_out_ports)
 		cwl_file_df = pd.read_sql_query(sql_steps_in_out_ports, con=conn)
 		wf_port_df = pd.read_sql_query(sql_wf_ports, con=conn)
 		df_dangling_ports = pd.read_sql_query(sql_dangling_port_id, con=conn)
 		df_port_alias = pd.read_sql_query(sql_port_alias, con=conn)
-		df_tuple = (cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias)
+		df_multiwriter_port= pd.read_sql_query(sql_multiwriter_port, con=conn)
+		df_data= pd.read_sql_query(sql_data, con=conn)
+		
+		df_tuple = (cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias,df_multiwriter_port,df_data)
 
 	return df_tuple
 
@@ -670,7 +707,7 @@ def get_filename(program_id, is_wf):
         return 'wf_' + program_name + '.cwl'
     elif program_id in wfid_list:      
         program_name = cwl_file_df[cwl_file_df['program_id'] ==program_id]['program_name'].values[0]
-        return 'wf' + program_name + '.cwl'
+        return 'wf_' + program_name + '.cwl'
     else:
         program_name = cwl_file_df[cwl_file_df['program_id'] ==program_id]['program_name'].values[0]
         return program_name + '.cwl'
@@ -692,6 +729,8 @@ def get_wf_steps(workflow_id):
         prog_name = cwl_file_df[cwl_file_df['program_id'] ==prog]['program_name'].values[0]
         filename = get_filename(prog,False)
         
+
+
         buffer = buffer + prog_name + ': \n ' + ' run: ' +filename + ' \n ' + ' in: \n'
         
         for pid in cwl_file_df[cwl_file_df["program_id"]==prog].index:
@@ -705,6 +744,7 @@ def get_wf_steps(workflow_id):
                 
                 filtered_df =  qual_portname[qual_portname["workflow_id"] == workflow_id]
                 qn_df = filtered_df[filtered_df["data_id"] == data_id]["qualified_portname"]
+                
                 if len(qn_df) == 0 :
                     alias = df_port_alias[df_port_alias["port_id"]==port_id]['alias']
                     if len(alias) != 0 :
@@ -712,13 +752,16 @@ def get_wf_steps(workflow_id):
                     else:
                         qname = port_name
                 else: 
-                    qname = qn_df.values[0]
+                    if '_YW_IN_' in port_name:
+                        qname = cwl_file_df.loc[pid]['qname']
+                    else:
+                        qname = qn_df.values[0]
                 buffer = buffer + '   ' + port_name + ': ' + qname + '\n'
             else: 
                 outport_list.append(port_name)
             #break
-        buffer = buffer + "  out: [" + ','.join(outport_list) + '] \n '    
-    
+        buffer = buffer + "  out: [" + ','.join(outport_list) + '] \n '  
+
     return header_step + buffer
 
 
@@ -789,6 +832,138 @@ def create_cwl_workflow():
 		wf_step_contents = get_wf_steps(id)
 		write_cwl_file(filename,cwl_wf_header + input_buffer, output_buffer, wf_step_contents)
 
+
+def get_max_prog_id():
+    cur = conn.cursor()
+    cur.execute('''SELECT max(program_id) as max_program_id from steps ''')
+    max_program_id = cur.fetchone()
+    
+    return int(max_program_id[0])
+
+def get_max_outport_channel_id(port_id):
+    cur = conn.cursor()
+    cur.execute(''' select 
+			max(channel_id)
+		from 
+			outflow_connects_to_channel
+        where port_id = :port_id
+		group by port_id
+        ''', {'port_id':port_id})
+    max_channel_id = cur.fetchone()
+    
+    return int(max_channel_id[0])   
+
+## Add an output port in the ports tables
+def ins_yw_program(wf_id, data_id,multiport_id, multi_port_name):
+    prog_id = get_max_prog_id() + 1
+    yw_prog_name = '_YW_PROG_' + str(prog_id )
+    
+    sql_prog = """
+               insert into steps values(?,?,?) 
+               """
+
+    #print([prog_id, yw_prog_name, yw_prog_name])
+    
+    sql_inprog = """
+                 insert into has_subprogram values(?,?)
+                 """   
+    values = [int(wf_id), prog_id]
+    #print(values)
+    conn.execute(sql_prog,[prog_id, yw_prog_name, yw_prog_name])
+    conn.commit()
+    conn.execute(sql_inprog,values)
+    conn.commit()
+    
+    port_type = 'OUT'
+    new_port_id = get_max_port_id() +1 
+    wf_port_name = '_YW_OUT' + yw_prog_name
+    
+    sql_port = """
+               insert into port values (?,?,?,?,?,?)
+               """ 
+    data = [int(new_port_id), port_type, wf_port_name,yw_prog_name + '/'+ wf_port_name,new_port_id,int(data_id)]
+    
+    conn.execute(sql_port,data)
+    conn.commit()
+
+    sql_link = """
+               insert into has_out_port values (?,?)
+               """   
+    values = [int(prog_id),int(new_port_id)]
+    #print(values)
+    
+    conn.execute(sql_link,values)
+    conn.commit()       
+    
+    channel_id = get_max_outport_channel_id(int(multiport_id))
+    sql_upd = """
+              update port_connects_to_channel set port_id = :port_id where channel_id =:channel_id
+              """
+    conn.execute(sql_upd,  {"channel_id": channel_id, "port_id":new_port_id})
+    conn.commit()
+    
+    sql_link = """
+               insert into port_alias values (?,?)
+               """   
+    values = [int(new_port_id),multi_port_name]
+    conn.execute(sql_link,values)
+    conn.commit()       
+    
+    return prog_id
+
+## Add an output port in the ports tables
+def ins_yw_prog_ports(new_program_id, port_id,port_name, qual_prog_name, data_id):
+    
+    port_type = 'IN'
+    new_port_id = get_max_port_id() +1 
+    wf_port_name = '_YW_IN_' + port_name + '_' + str(new_port_id)
+    
+    sql_port = """
+               insert into port values (?,?,?,?,?,?)
+               """ 
+    data = [int(new_port_id), port_type, wf_port_name,qual_prog_name,port_id,int(data_id)]
+    
+    conn.execute(sql_port,data)
+    conn.commit()
+
+    sql_link = """
+               insert into has_in_port values (?,?)
+               """   
+    values = [int(new_program_id),int(new_port_id)]
+    print(values)
+    
+    conn.execute(sql_link,values)
+    conn.commit()
+    
+    #rebuild_dataframes()
+
+
+
+def check_multiwriter_prog():
+	if df_multiwriter_port.shape[0] > 1: 
+		wf_id = df_multiwriter_port['workflow_id'].values[0]
+		data_id = df_multiwriter_port['data_id'].values[0]
+		multiport_name = df_data[df_data['data_id' ]== data_id]['data_name'].unique()[0]
+		multiport_id = wf_port_df[wf_port_df['port_name'] ==multiport_name]["port_id"].values[0]
+		wf_data_id = wf_port_df[wf_port_df['port_name'] == multiport_name]['data_id'].values[0]
+		print(data_id,multiport_name,multiport_id)
+		new_prog_id = ins_yw_program(wf_id,wf_data_id,multiport_id,multiport_name)
+		for idx in df_multiwriter_port.index:
+			port_id = df_multiwriter_port.loc[idx]['port_id']
+			port_name = df_multiwriter_port.loc[idx]['port_name']    
+			port_type = df_multiwriter_port.loc[idx]['port_type']
+			program_name = df_multiwriter_port.loc[idx]['program_name']
+			data_id = df_multiwriter_port.loc[idx]['data_id']
+			ins_yw_prog_ports(new_prog_id,port_id,port_name, program_name+'/'+port_name, data_id)
+	else:
+		print("There are no multiple writers for the same port.")
+
+
+
+
+
+
+
 """
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -837,7 +1012,7 @@ print_footer()
 #@in yw_tables
 print("+" * 100)
 print("Creating dataframes for processing. ")
-cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias = create_DataFrames(False)
+cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias, df_multiwriter_port ,df_data = create_DataFrames(False)
 print_footer()
 #@out dataFrames
 #@end create_dataFrames
@@ -856,11 +1031,23 @@ print_footer()
 #@out yw_tables
 #@end create_missing_cwl_ports
 
+
+#@begin create_yw_program
+#@in dataFrames
+print("+" * 100)
+print("Check for the output port written by multiple programs. ")
+check_multiwriter_prog()
+print_footer()
+#@out yw_tables
+#@end create_missing_cwl_ports
+
+
+
 #@begin reload_dataFrames
 #@in yw_tables 
 print("+" * 100)
 print("Reload the dataframes as data in tables have changed. ")
-cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias, qual_portname ,qual_wf_out_port = reload_dataframe()
+cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias, qual_portname ,qual_wf_out_port, df_multiwriter_port ,df_data = reload_dataframe()
 print(cwl_file_df.shape)
 print_footer()
 
