@@ -1,8 +1,10 @@
-#!/usr/bin/env cwl-runner 
-cwlVersion: v1.0 
-class: Workflow 
-requirements: 
-  - class: SubworkflowFeatureRequirement 
+
+#!/usr/bin/env cwl-runner
+cwlVersion: v1.0
+class: Workflow
+requirements:
+    - class: SubworkflowFeatureRequirement
+
 inputs: 
  calibration_years: 
   type: string 

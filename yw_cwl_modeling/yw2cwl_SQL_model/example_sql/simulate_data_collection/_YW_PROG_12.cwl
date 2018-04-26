@@ -3,20 +3,20 @@
 cwlVersion: v1.0
 class: CommandLineTool
 inputs: 
- coordinates: 
+ _YW_IN_run_log: 
   type: string 
  
- prism_data: 
+ _YW_IN_run_log: 
   type: string 
  
- run_id: 
+ _YW_IN_run_log: 
   type: string 
  
- session_id: 
+ _YW_IN_run_log: 
   type: string 
  
 outputs: 
- prism_data_for_coordinates: 
+ _YW_OUT_YW_PROG_12: 
   type: string 
  
 baseCommand: 

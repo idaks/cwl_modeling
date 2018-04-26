@@ -3,14 +3,11 @@
 cwlVersion: v1.0
 class: CommandLineTool
 inputs: 
- input1_step1: 
-  type: string 
- 
- input2_step1: 
+ inp2: 
   type: string 
  
 outputs: 
- output1_step1: 
+ out2: 
   type: string 
  
 baseCommand: 

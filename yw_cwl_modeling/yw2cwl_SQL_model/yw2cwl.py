@@ -1,3 +1,24 @@
+
+#!/usr/bin/python
+
+
+
+'''
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+This script is used for converting the yw model files into                                 +
+CWL workflow files 										                                   +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                                                                                           +
+version  |  date     |  author   |  comment
+--------------------------------------------------------------------------------------------
+1.0      |  04/20/18 | pratik  | intial version.                                         +
+--------------------------------------------------------------------------------------------
+                                                                                           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+'''
+
+
+
 import os
 import re
 import pandas as pd
@@ -769,32 +790,60 @@ def create_cwl_workflow():
 		write_cwl_file(filename,cwl_wf_header + input_buffer, output_buffer, wf_step_contents)
 
 """
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	MAIN FUNCTION FOR EXECUTION OF PARSER
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 """        	
+#@begin YW2CWL_parser 
+#@in yw_model_file 
+#@param base_dir 
+
+
+#@begin create_db_conn 
+#@in yw_model_file 
+#@param base_dir 
+
 base_dir = 'example_sql/'
 input_file = input("Enter the yw model filename:  ")
-yw_model_file = base_dir + input_file
+yw_model_file = base_dir + input_file 
 db_model = yw_model_file[:-2] + '.db'
 print(db_model)
 conn = sqlite3.connect(db_model)
+#@out db_conn
+#@end  create_db_conn
 
+#@begin create_db_tables
+#@in db_conn
 drop_workflow_tables()
 create_workflow_tables(conn);
+#@out yw_tables
+#@end create_db_tables 
 
 
+#@begin create_yw_db_model 
+#@in yw_model_file
+#@param yw_tables
 print("+" * 100)
 print("Reading Model Files and creating tables in the database: " + db_model)
 read_yw_model(yw_model_file)
 print_footer()
+#@out yw_db_model
+#@end create_yw_db_model 
 
+
+#@begin create_dataFrames 
+#@in yw_tables
 print("+" * 100)
 print("Creating dataframes for processing. ")
 cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias = create_DataFrames(False)
 print_footer()
+#@out dataFrames
+#@end create_dataFrames
 
+#@begin create_missing_cwl_ports
+#@in dataFrames
 print("+" * 100)
 print("Check for the dangling ports and create the entries in the port and respective realtions. ")
 check_danglingports()
@@ -804,13 +853,23 @@ print("+" * 100)
 print("Check for the program without output ports and create the entries in the port and respective realtions. ")
 chk_prog_wo_output_port()
 print_footer()
+#@out yw_tables
+#@end create_missing_cwl_ports
 
+#@begin reload_dataFrames
+#@in yw_tables 
 print("+" * 100)
 print("Reload the dataframes as data in tables have changed. ")
 cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias, qual_portname ,qual_wf_out_port = reload_dataframe()
 print(cwl_file_df.shape)
 print_footer()
 
+#@out dataFrames 
+#@end reload_dataFrames 
+
+
+#@begin create_cwl_file
+#@in dataFrames
 print("+" * 100)
 print("create list of workflow_id and program_id")
 wf_id = cwl_file_df['workflow_id'].unique()
@@ -819,18 +878,30 @@ print(wf_port_df)
 dirname = base_dir +  wf_port_df[wf_port_df["program_id"] ==1]['program_name'].values[0]
 print ("Directory for storing the output files. " + dirname)
 print_footer()
-
-
 print("+" * 100)
 print("creating cwl files required for creating the worflows.")
 
 create_cwl_file()
-create_cwl_workflow
 print_footer()
+#@out cwl_files
+#@end create_cwl_file
 
+#@begin create_cwl_wf
+#@in dataFrames 
+#@in cwl_files 
 
 print("+" * 100)
 print("creating cwl workflow files ")
 
 create_cwl_workflow()
 print_footer()
+
+#@out cwl_wf_files 
+#@end create_cwl_wf 
+
+
+#@out yw_db_model
+#@out cwl_wf_files
+
+
+#@end YW2CWL_parser
