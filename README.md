@@ -6,6 +6,14 @@
 ## YesWorkflow: 
 The yw-prototypes repository contains early implementations of YesWorkflow(https://github.com/yesworkflow-org/yw-prototypes), an approach to modeling conventional scripts and programs as scientific workflows. 
 
+
+## Differences between the models. 
+1. Execution Language Vs Modeling 
+2. No Provenance Vs Provenance
+3. Flexibility 
+4. 
+
+
 ## Installing CWL: 
 
 * Please follow the steps for installing CWL using. 
@@ -17,8 +25,8 @@ The yw-prototypes repository contains early implementations of YesWorkflow(https
 
 * The script yw2cwl.py takes yesworkflow model facts file as input.  
 * $ python yw2cwl.py  
-* Enter the yw model filename:  get_itrdb_data/get_itrdb_data.P
-* The CWL files will be created in the example_sql/get_itrdb_data folder. 
+* Enter the yw model filename:  **get_itrdb_data/get_itrdb_data.P**
+* The CWL files will be created in the **example_sql/get_itrdb_data** folder. 
 * Verify the CWL workflow file using the cwl-runner tool. 
 
 
