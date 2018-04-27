@@ -16,16 +16,29 @@ The yw-prototypes repository contains early implementations of YesWorkflow(https
 
 ## Installing CWL: 
 
-* Please follow the steps for installing CWL using. 
+* Please follow the steps for installing CWL (https://github.com/common-workflow-language/cwltool). 
 
 
 ## 
 
+## Installing YW2CWL parser. Using Github (requires installation of git)
+
+* Install git from https://git-scm.com/downloads
+* Open your command line tool (CMD for windows and terminal for Mac or Linux)
+* Go to a directory where you would like to clone the repository
+* Run git clone https://github.com/idaks/cwl_modeling.git
+
 ## Executing yw2cwl.py 
 
-* The script yw2cwl.py takes yesworkflow model facts file as input.  
-* $ python yw2cwl.py  
-* Enter the yw model filename:  **get_itrdb_data/get_itrdb_data.P**
+* The script yw2cwl.py takes yesworkflow model facts file as input. 
+* Run the following command from command prompt
+``` 
+$ python yw2cwl.py  
+```
+* Enter the YW model filename:  
+```
+Enter the YW model filename:  **get_itrdb_data/get_itrdb_data.P**
+```
 * The CWL files will be created in the **example_sql/get_itrdb_data** folder. 
 * Verify the CWL workflow file using the cwl-runner tool. 
 
