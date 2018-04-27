@@ -1,7 +1,0 @@
-,program_name,input_ports,output_ports
-2,create_shapefile_dir,['dir_name'],['user_created_dir']
-3,download_shapefile_archive,"['file_archive', 'dir']",['compressed_shapefile']
-4,uncompress_shapefile,"['zipfile', 'dir_name']","['shapefiles_dir', 'layer_boundary', 'layer_tracts', 'metadata_xml_file', 'tracts_xml_file']"
-5,read_shapefile,"['layer', 'dir']",['dataobject']
-6,get_treepolygon,"['width', 'polygon', 'quadsegs']",['template']
-7,extract_tree_ring_data,"['polygon', 'label', 'raw_dir', 'extraction_dir', 'prediction_years', 'calib_years', 'measurement_type', 'chronology_type', 'force_redo']",['list']

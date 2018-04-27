@@ -1,4 +1,0 @@
-,program_name,input_ports,output_ports
-10,simplifyLinearModels,"['coefficients', 'model_errors']",['final_models']
-8,defineLinearModels,"['predlist', 'carscores', 'max_preds']","['models', 'matches']"
-9,calculateLinearModels,"['models', 'matches']","['coefficients', 'model_errors']"
