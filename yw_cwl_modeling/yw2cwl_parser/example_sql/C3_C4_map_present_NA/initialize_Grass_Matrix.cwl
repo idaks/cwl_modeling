@@ -2,7 +2,10 @@
 cwlVersion: v1.0 
 class: CommandLineTool 
 inputs: 
- _YW_IN_initialize_Grass_Matrix: 
+ num_col: 
+  type: string 
+ 
+ num_rows: 
   type: string 
  
 outputs: 

@@ -7,13 +7,16 @@ inputs:
  SYNMAP_land_cover_map_data: 
   type: string 
  
- _YW_IN_initialize_Grass_Matrix: 
-  type: string 
- 
  mean_airtemp: 
   type: string 
  
  mean_precip: 
+  type: string 
+ 
+ num_col: 
+  type: string 
+ 
+ num_rows: 
   type: string 
  
 outputs: 
@@ -45,7 +48,8 @@ steps:
  initialize_Grass_Matrix: 
   run: initialize_Grass_Matrix.cwl 
   in: 
-   _YW_IN_initialize_Grass_Matrix: _YW_IN_initialize_Grass_Matrix
+   num_col: num_col
+   num_rows: num_rows
   out: [Grass] 
  examine_pixels_for_grass: 
   run: examine_pixels_for_grass.cwl 

@@ -1,0 +1,408 @@
+
+% FACT: program(program_id, program_name, qualified_program_name, begin_annotation_id, end_annotation_id).
+program(1, 'C3_C4_map_present_NA', 'C3_C4_map_present_NA', 1, 83).
+program(2, 'fetch_SYNMAP_land_cover_map_variable', 'C3_C4_map_present_NA.fetch_SYNMAP_land_cover_map_variable', 16, 27).
+program(3, 'fetch_monthly_mean_air_temperature_data', 'C3_C4_map_present_NA.fetch_monthly_mean_air_temperature_data', 28, 33).
+program(4, 'fetch_monthly_mean_precipitation_data', 'C3_C4_map_present_NA.fetch_monthly_mean_precipitation_data', 34, 39).
+program(5, 'initialize_Grass_Matrix', 'C3_C4_map_present_NA.initialize_Grass_Matrix', 40, 45).
+program(6, 'examine_pixels_for_grass', 'C3_C4_map_present_NA.examine_pixels_for_grass', 46, 55).
+program(7, 'generate_netcdf_file_for_C3_fraction', 'C3_C4_map_present_NA.generate_netcdf_file_for_C3_fraction', 56, 64).
+program(8, 'generate_netcdf_file_for_C4_fraction', 'C3_C4_map_present_NA.generate_netcdf_file_for_C4_fraction', 65, 73).
+program(9, 'generate_netcdf_file_for_Grass_fraction', 'C3_C4_map_present_NA.generate_netcdf_file_for_Grass_fraction', 74, 82).
+
+% FACT: workflow(program_id).
+workflow(1).
+
+% FACT: function(program_id).
+
+% FACT: has_subprogram(program_id, subprogram_id).
+has_subprogram(1, 2).
+has_subprogram(1, 3).
+has_subprogram(1, 4).
+has_subprogram(1, 5).
+has_subprogram(1, 6).
+has_subprogram(1, 7).
+has_subprogram(1, 8).
+has_subprogram(1, 9).
+
+% FACT: port(port_id, port_type, port_name, qualified_port_name, port_annotation_id, data_id).
+port(1, 'in', 'num_col', 'C3_C4_map_present_NA<-num_col', 2, 1).
+port(2, 'in', 'num_rows', 'C3_C4_map_present_NA<-num_rows', 3, 2).
+port(3, 'in', 'SYNMAP_land_cover_map_data', 'C3_C4_map_present_NA<-SYNMAP_land_cover_map_data', 4, 3).
+port(4, 'in', 'mean_airtemp', 'C3_C4_map_present_NA<-mean_airtemp', 6, 4).
+port(5, 'in', 'mean_precip', 'C3_C4_map_present_NA<-mean_precip', 8, 5).
+port(6, 'out', 'C3_fraction_data', 'C3_C4_map_present_NA->C3_fraction_data', 10, 6).
+port(7, 'out', 'C4_fraction_data', 'C3_C4_map_present_NA->C4_fraction_data', 12, 7).
+port(8, 'out', 'Grass_fraction_data', 'C3_C4_map_present_NA->Grass_fraction_data', 14, 8).
+port(9, 'in', 'SYNMAP_land_cover_map_data', 'C3_C4_map_present_NA.fetch_SYNMAP_land_cover_map_variable<-SYNMAP_land_cover_map_data', 17, 9).
+port(10, 'out', 'lon', 'C3_C4_map_present_NA.fetch_SYNMAP_land_cover_map_variable->lon', 19, 10).
+port(11, 'out', 'lat', 'C3_C4_map_present_NA.fetch_SYNMAP_land_cover_map_variable->lat', 21, 11).
+port(12, 'out', 'lon_bnds', 'C3_C4_map_present_NA.fetch_SYNMAP_land_cover_map_variable->lon_bnds', 23, 12).
+port(13, 'out', 'lat_bnds', 'C3_C4_map_present_NA.fetch_SYNMAP_land_cover_map_variable->lat_bnds', 25, 13).
+port(14, 'in', 'mean_airtemp', 'C3_C4_map_present_NA.fetch_monthly_mean_air_temperature_data<-mean_airtemp', 29, 14).
+port(15, 'out', 'Tair', 'C3_C4_map_present_NA.fetch_monthly_mean_air_temperature_data->Tair', 31, 15).
+port(16, 'in', 'mean_precip', 'C3_C4_map_present_NA.fetch_monthly_mean_precipitation_data<-mean_precip', 35, 16).
+port(17, 'out', 'Rain', 'C3_C4_map_present_NA.fetch_monthly_mean_precipitation_data->Rain', 37, 17).
+port(18, 'in', 'num_col', 'C3_C4_map_present_NA.initialize_Grass_Matrix<-num_col', 41, 18).
+port(19, 'in', 'num_rows', 'C3_C4_map_present_NA.initialize_Grass_Matrix<-num_rows', 42, 19).
+port(20, 'out', 'Grass', 'C3_C4_map_present_NA.initialize_Grass_Matrix->Grass', 43, 20).
+port(21, 'in', 'Tair', 'C3_C4_map_present_NA.examine_pixels_for_grass<-Tair', 47, 15).
+port(22, 'in', 'Rain', 'C3_C4_map_present_NA.examine_pixels_for_grass<-Rain', 49, 17).
+port(23, 'out', 'C3', 'C3_C4_map_present_NA.examine_pixels_for_grass->C3', 51, 21).
+port(24, 'out', 'C4', 'C3_C4_map_present_NA.examine_pixels_for_grass->C4', 53, 22).
+port(25, 'in', 'lon_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_C3_fraction<-lon_variable', 57, 10).
+port(26, 'in', 'lat_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_C3_fraction<-lat_variable', 58, 11).
+port(27, 'in', 'lon_bnds_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_C3_fraction<-lon_bnds_variable', 59, 12).
+port(28, 'in', 'lat_bnds_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_C3_fraction<-lat_bnds_variable', 60, 13).
+port(29, 'in', 'C3_Data', 'C3_C4_map_present_NA.generate_netcdf_file_for_C3_fraction<-C3_Data', 61, 21).
+port(30, 'out', 'C3_fraction_data', 'C3_C4_map_present_NA.generate_netcdf_file_for_C3_fraction->C3_fraction_data', 62, 23).
+port(31, 'in', 'lon_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_C4_fraction<-lon_variable', 66, 10).
+port(32, 'in', 'lat_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_C4_fraction<-lat_variable', 67, 11).
+port(33, 'in', 'lon_bnds_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_C4_fraction<-lon_bnds_variable', 68, 12).
+port(34, 'in', 'lat_bnds_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_C4_fraction<-lat_bnds_variable', 69, 13).
+port(35, 'in', 'C4_Data', 'C3_C4_map_present_NA.generate_netcdf_file_for_C4_fraction<-C4_Data', 70, 22).
+port(36, 'out', 'C4_fraction_data', 'C3_C4_map_present_NA.generate_netcdf_file_for_C4_fraction->C4_fraction_data', 71, 24).
+port(37, 'in', 'lon_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_Grass_fraction<-lon_variable', 75, 10).
+port(38, 'in', 'lat_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_Grass_fraction<-lat_variable', 76, 11).
+port(39, 'in', 'lon_bnds_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_Grass_fraction<-lon_bnds_variable', 77, 12).
+port(40, 'in', 'lat_bnds_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_Grass_fraction<-lat_bnds_variable', 78, 13).
+port(41, 'in', 'Grass_variable', 'C3_C4_map_present_NA.generate_netcdf_file_for_Grass_fraction<-Grass_variable', 79, 20).
+port(42, 'out', 'Grass_fraction_data', 'C3_C4_map_present_NA.generate_netcdf_file_for_Grass_fraction->Grass_fraction_data', 80, 25).
+
+% FACT: port_alias(port_id, alias).
+port_alias(10, 'lon_variable').
+port_alias(11, 'lat_variable').
+port_alias(12, 'lon_bnds_variable').
+port_alias(13, 'lat_bnds_variable').
+port_alias(15, 'Tair_Matrix').
+port_alias(17, 'Rain_Matrix').
+port_alias(20, 'Grass_variable').
+port_alias(21, 'Tair_Matrix').
+port_alias(22, 'Rain_Matrix').
+port_alias(23, 'C3_Data').
+port_alias(24, 'C4_Data').
+
+% FACT: port_uri_template(port_id, uri).
+port_uri_template(3, 'inputs/land_cover/SYNMAP_NA_QD.nc').
+port_uri_template(4, 'file:inputs/narr_air.2m_monthly/air.2m_monthly_{start_year}_{end_year}_mean.{month}.nc').
+port_uri_template(5, 'file:inputs/narr_apcp_rescaled_monthly/apcp_monthly_{start_year}_{end_year}_mean.{month}.nc').
+port_uri_template(6, 'file:outputs/SYNMAP_PRESENTVEG_C3Grass_RelaFrac_NA_v2.0.nc').
+port_uri_template(7, 'file:outputs/SYNMAP_PRESENTVEG_C4Grass_RelaFrac_NA_v2.0.nc').
+port_uri_template(8, 'file:outputs/SYNMAP_PRESENTVEG_Grass_Fraction_NA_v2.0.nc').
+port_uri_template(9, 'inputs/land_cover/SYNMAP_NA_QD.nc').
+port_uri_template(14, 'file:inputs/narr_air.2m_monthly/air.2m_monthly_{start_year}_{end_year}_mean.{month}.nc').
+port_uri_template(16, 'file:inputs/narr_apcp_rescaled_monthly/apcp_monthly_{start_year}_{end_year}_mean.{month}.nc').
+port_uri_template(30, 'file:outputs/SYNMAP_PRESENTVEG_C3Grass_RelaFrac_NA_v2.0.nc').
+port_uri_template(36, 'file:outputs/SYNMAP_PRESENTVEG_C4Grass_RelaFrac_NA_v2.0.nc').
+port_uri_template(42, 'file:outputs/SYNMAP_PRESENTVEG_Grass_Fraction_NA_v2.0.nc').
+
+% FACT: has_in_port(block_id, port_id).
+has_in_port(1, 1).
+has_in_port(1, 2).
+has_in_port(1, 3).
+has_in_port(1, 4).
+has_in_port(1, 5).
+has_in_port(2, 9).
+has_in_port(3, 14).
+has_in_port(4, 16).
+has_in_port(5, 18).
+has_in_port(5, 19).
+has_in_port(6, 21).
+has_in_port(6, 22).
+has_in_port(7, 25).
+has_in_port(7, 26).
+has_in_port(7, 27).
+has_in_port(7, 28).
+has_in_port(7, 29).
+has_in_port(8, 31).
+has_in_port(8, 32).
+has_in_port(8, 33).
+has_in_port(8, 34).
+has_in_port(8, 35).
+has_in_port(9, 37).
+has_in_port(9, 38).
+has_in_port(9, 39).
+has_in_port(9, 40).
+has_in_port(9, 41).
+
+% FACT: has_out_port(block_id, port_id).
+has_out_port(1, 6).
+has_out_port(1, 7).
+has_out_port(1, 8).
+has_out_port(2, 10).
+has_out_port(2, 11).
+has_out_port(2, 12).
+has_out_port(2, 13).
+has_out_port(3, 15).
+has_out_port(4, 17).
+has_out_port(5, 20).
+has_out_port(6, 23).
+has_out_port(6, 24).
+has_out_port(7, 30).
+has_out_port(8, 36).
+has_out_port(9, 42).
+
+% FACT: data(data_id, data_name, qualified_data_name).
+data(1, 'num_col', '[num_col]').
+data(2, 'num_rows', '[num_rows]').
+data(3, 'SYNMAP_land_cover_map_data', '[SYNMAP_land_cover_map_data]').
+data(4, 'mean_airtemp', '[mean_airtemp]').
+data(5, 'mean_precip', '[mean_precip]').
+data(6, 'C3_fraction_data', '[C3_fraction_data]').
+data(7, 'C4_fraction_data', '[C4_fraction_data]').
+data(8, 'Grass_fraction_data', '[Grass_fraction_data]').
+data(9, 'SYNMAP_land_cover_map_data', 'C3_C4_map_present_NA[SYNMAP_land_cover_map_data]').
+data(10, 'lon_variable', 'C3_C4_map_present_NA[lon_variable]').
+data(11, 'lat_variable', 'C3_C4_map_present_NA[lat_variable]').
+data(12, 'lon_bnds_variable', 'C3_C4_map_present_NA[lon_bnds_variable]').
+data(13, 'lat_bnds_variable', 'C3_C4_map_present_NA[lat_bnds_variable]').
+data(14, 'mean_airtemp', 'C3_C4_map_present_NA[mean_airtemp]').
+data(15, 'Tair_Matrix', 'C3_C4_map_present_NA[Tair_Matrix]').
+data(16, 'mean_precip', 'C3_C4_map_present_NA[mean_precip]').
+data(17, 'Rain_Matrix', 'C3_C4_map_present_NA[Rain_Matrix]').
+data(18, 'num_col', 'C3_C4_map_present_NA[num_col]').
+data(19, 'num_rows', 'C3_C4_map_present_NA[num_rows]').
+data(20, 'Grass_variable', 'C3_C4_map_present_NA[Grass_variable]').
+data(21, 'C3_Data', 'C3_C4_map_present_NA[C3_Data]').
+data(22, 'C4_Data', 'C3_C4_map_present_NA[C4_Data]').
+data(23, 'C3_fraction_data', 'C3_C4_map_present_NA[C3_fraction_data]').
+data(24, 'C4_fraction_data', 'C3_C4_map_present_NA[C4_fraction_data]').
+data(25, 'Grass_fraction_data', 'C3_C4_map_present_NA[Grass_fraction_data]').
+
+% FACT: channel(channel_id, data_id).
+channel(1, 6).
+channel(2, 7).
+channel(3, 8).
+channel(4, 9).
+channel(5, 14).
+channel(6, 16).
+channel(7, 18).
+channel(8, 19).
+channel(9, 15).
+channel(10, 17).
+channel(11, 10).
+channel(12, 10).
+channel(13, 10).
+channel(14, 11).
+channel(15, 11).
+channel(16, 11).
+channel(17, 12).
+channel(18, 12).
+channel(19, 12).
+channel(20, 13).
+channel(21, 13).
+channel(22, 13).
+channel(23, 21).
+channel(24, 22).
+channel(25, 20).
+channel(26, 1).
+channel(27, 2).
+channel(28, 3).
+channel(29, 4).
+channel(30, 5).
+channel(31, 23).
+channel(32, 24).
+channel(33, 25).
+
+% FACT: port_connects_to_channel(port_id, channel_id).
+port_connects_to_channel(30, 1).
+port_connects_to_channel(36, 2).
+port_connects_to_channel(42, 3).
+port_connects_to_channel(9, 4).
+port_connects_to_channel(14, 5).
+port_connects_to_channel(16, 6).
+port_connects_to_channel(18, 7).
+port_connects_to_channel(19, 8).
+port_connects_to_channel(15, 9).
+port_connects_to_channel(21, 9).
+port_connects_to_channel(17, 10).
+port_connects_to_channel(22, 10).
+port_connects_to_channel(10, 11).
+port_connects_to_channel(25, 11).
+port_connects_to_channel(10, 12).
+port_connects_to_channel(31, 12).
+port_connects_to_channel(10, 13).
+port_connects_to_channel(37, 13).
+port_connects_to_channel(11, 14).
+port_connects_to_channel(26, 14).
+port_connects_to_channel(11, 15).
+port_connects_to_channel(32, 15).
+port_connects_to_channel(11, 16).
+port_connects_to_channel(38, 16).
+port_connects_to_channel(12, 17).
+port_connects_to_channel(27, 17).
+port_connects_to_channel(12, 18).
+port_connects_to_channel(33, 18).
+port_connects_to_channel(12, 19).
+port_connects_to_channel(39, 19).
+port_connects_to_channel(13, 20).
+port_connects_to_channel(28, 20).
+port_connects_to_channel(13, 21).
+port_connects_to_channel(34, 21).
+port_connects_to_channel(13, 22).
+port_connects_to_channel(40, 22).
+port_connects_to_channel(23, 23).
+port_connects_to_channel(29, 23).
+port_connects_to_channel(24, 24).
+port_connects_to_channel(35, 24).
+port_connects_to_channel(20, 25).
+port_connects_to_channel(41, 25).
+port_connects_to_channel(18, 26).
+port_connects_to_channel(19, 27).
+port_connects_to_channel(9, 28).
+port_connects_to_channel(14, 29).
+port_connects_to_channel(16, 30).
+port_connects_to_channel(30, 31).
+port_connects_to_channel(36, 32).
+port_connects_to_channel(42, 33).
+
+% FACT: inflow_connects_to_channel(port_id, channel_id).
+inflow_connects_to_channel(3, 4).
+inflow_connects_to_channel(4, 5).
+inflow_connects_to_channel(5, 6).
+inflow_connects_to_channel(1, 7).
+inflow_connects_to_channel(2, 8).
+inflow_connects_to_channel(1, 26).
+inflow_connects_to_channel(2, 27).
+inflow_connects_to_channel(3, 28).
+inflow_connects_to_channel(4, 29).
+inflow_connects_to_channel(5, 30).
+
+% FACT: outflow_connects_to_channel(port_id, channel_id).
+outflow_connects_to_channel(6, 1).
+outflow_connects_to_channel(7, 2).
+outflow_connects_to_channel(8, 3).
+outflow_connects_to_channel(6, 31).
+outflow_connects_to_channel(7, 32).
+outflow_connects_to_channel(8, 33).
+
+% FACT: uri_variable(uri_variable_id, variable_name, port_id).
+uri_variable(1, 'start_year', 4).
+uri_variable(2, 'end_year', 4).
+uri_variable(3, 'month', 4).
+uri_variable(4, 'start_year', 5).
+uri_variable(5, 'end_year', 5).
+uri_variable(6, 'month', 5).
+uri_variable(7, 'start_year', 14).
+uri_variable(8, 'end_year', 14).
+uri_variable(9, 'month', 14).
+uri_variable(10, 'start_year', 16).
+uri_variable(11, 'end_year', 16).
+uri_variable(12, 'month', 16).
+
+% FACT: log_template(log_template_id, port_id, entry_template, log_annotation_id).
+
+% FACT: log_template_variable(log_variable_id, variable_name, log_template_id).
+
+% FACT: extract_source(source_id, source_path).
+extract_source(1, '').
+
+% FACT: annotation(annotation_id, source_id, line_number, tag, keyword, value).
+annotation(1, 1, 1, 'begin', '@BEGIN', 'C3_C4_map_present_NA').
+annotation(2, 1, 2, 'in', '@in', 'num_col').
+annotation(3, 1, 3, 'in', '@in', 'num_rows').
+annotation(4, 1, 4, 'in', '@in', 'SYNMAP_land_cover_map_data').
+annotation(5, 1, 4, 'uri', '@URI', 'inputs/land_cover/SYNMAP_NA_QD.nc').
+annotation(6, 1, 5, 'in', '@in', 'mean_airtemp').
+annotation(7, 1, 5, 'uri', '@URI', 'file:inputs/narr_air.2m_monthly/air.2m_monthly_{start_year}_{end_year}_mean.{month}.nc').
+annotation(8, 1, 6, 'in', '@in', 'mean_precip').
+annotation(9, 1, 6, 'uri', '@URI', 'file:inputs/narr_apcp_rescaled_monthly/apcp_monthly_{start_year}_{end_year}_mean.{month}.nc').
+annotation(10, 1, 8, 'out', '@out', 'C3_fraction_data').
+annotation(11, 1, 8, 'uri', '@URI', 'file:outputs/SYNMAP_PRESENTVEG_C3Grass_RelaFrac_NA_v2.0.nc').
+annotation(12, 1, 9, 'out', '@out', 'C4_fraction_data').
+annotation(13, 1, 9, 'uri', '@URI', 'file:outputs/SYNMAP_PRESENTVEG_C4Grass_RelaFrac_NA_v2.0.nc').
+annotation(14, 1, 10, 'out', '@out', 'Grass_fraction_data').
+annotation(15, 1, 10, 'uri', '@URI', 'file:outputs/SYNMAP_PRESENTVEG_Grass_Fraction_NA_v2.0.nc').
+annotation(16, 1, 18, 'begin', '@BEGIN', 'fetch_SYNMAP_land_cover_map_variable').
+annotation(17, 1, 19, 'in', '@in', 'SYNMAP_land_cover_map_data').
+annotation(18, 1, 19, 'uri', '@URI', 'inputs/land_cover/SYNMAP_NA_QD.nc').
+annotation(19, 1, 20, 'out', '@out', 'lon').
+annotation(20, 1, 20, 'as', '@AS', 'lon_variable').
+annotation(21, 1, 21, 'out', '@out', 'lat').
+annotation(22, 1, 21, 'as', '@AS', 'lat_variable').
+annotation(23, 1, 22, 'out', '@out', 'lon_bnds').
+annotation(24, 1, 22, 'as', '@AS', 'lon_bnds_variable').
+annotation(25, 1, 23, 'out', '@out', 'lat_bnds').
+annotation(26, 1, 23, 'as', '@AS', 'lat_bnds_variable').
+annotation(27, 1, 42, 'end', '@END', 'fetch_SYNMAP_land_cover_map_variable').
+annotation(28, 1, 46, 'begin', '@BEGIN', 'fetch_monthly_mean_air_temperature_data').
+annotation(29, 1, 47, 'in', '@in', 'mean_airtemp').
+annotation(30, 1, 47, 'uri', '@URI', 'file:inputs/narr_air.2m_monthly/air.2m_monthly_{start_year}_{end_year}_mean.{month}.nc').
+annotation(31, 1, 48, 'out', '@out', 'Tair').
+annotation(32, 1, 48, 'as', '@AS', 'Tair_Matrix').
+annotation(33, 1, 56, 'end', '@END', 'fetch_monthly_mean_air_temperature_data').
+annotation(34, 1, 60, 'begin', '@BEGIN', 'fetch_monthly_mean_precipitation_data').
+annotation(35, 1, 61, 'in', '@in', 'mean_precip').
+annotation(36, 1, 61, 'uri', '@URI', 'file:inputs/narr_apcp_rescaled_monthly/apcp_monthly_{start_year}_{end_year}_mean.{month}.nc').
+annotation(37, 1, 62, 'out', '@out', 'Rain').
+annotation(38, 1, 62, 'as', '@AS', 'Rain_Matrix').
+annotation(39, 1, 70, 'end', '@END', 'fetch_monthly_mean_precipitation_data').
+annotation(40, 1, 73, 'begin', '@BEGIN', 'initialize_Grass_Matrix').
+annotation(41, 1, 74, 'in', '@in', 'num_col').
+annotation(42, 1, 75, 'in', '@in', 'num_rows').
+annotation(43, 1, 76, 'out', '@out', 'Grass').
+annotation(44, 1, 76, 'as', '@AS', 'Grass_variable').
+annotation(45, 1, 83, 'end', '@END', 'initialize_Grass_Matrix').
+annotation(46, 1, 87, 'begin', '@BEGIN', 'examine_pixels_for_grass').
+annotation(47, 1, 88, 'in', '@in', 'Tair').
+annotation(48, 1, 88, 'as', '@AS', 'Tair_Matrix').
+annotation(49, 1, 89, 'in', '@in', 'Rain').
+annotation(50, 1, 89, 'as', '@AS', 'Rain_Matrix').
+annotation(51, 1, 90, 'out', '@out', 'C3').
+annotation(52, 1, 90, 'as', '@AS', 'C3_Data').
+annotation(53, 1, 91, 'out', '@out', 'C4').
+annotation(54, 1, 91, 'as', '@AS', 'C4_Data').
+annotation(55, 1, 127, 'end', '@END', 'examine_pixels_for_grass').
+annotation(56, 1, 172, 'begin', '@BEGIN', 'generate_netcdf_file_for_C3_fraction').
+annotation(57, 1, 173, 'in', '@in', 'lon_variable').
+annotation(58, 1, 174, 'in', '@in', 'lat_variable').
+annotation(59, 1, 175, 'in', '@in', 'lon_bnds_variable').
+annotation(60, 1, 176, 'in', '@in', 'lat_bnds_variable').
+annotation(61, 1, 177, 'in', '@in', 'C3_Data').
+annotation(62, 1, 178, 'out', '@out', 'C3_fraction_data').
+annotation(63, 1, 178, 'uri', '@URI', 'file:outputs/SYNMAP_PRESENTVEG_C3Grass_RelaFrac_NA_v2.0.nc').
+annotation(64, 1, 228, 'end', '@END', 'generate_netcdf_file_for_C3_fraction').
+annotation(65, 1, 233, 'begin', '@BEGIN', 'generate_netcdf_file_for_C4_fraction').
+annotation(66, 1, 234, 'in', '@in', 'lon_variable').
+annotation(67, 1, 235, 'in', '@in', 'lat_variable').
+annotation(68, 1, 236, 'in', '@in', 'lon_bnds_variable').
+annotation(69, 1, 237, 'in', '@in', 'lat_bnds_variable').
+annotation(70, 1, 238, 'in', '@in', 'C4_Data').
+annotation(71, 1, 239, 'out', '@out', 'C4_fraction_data').
+annotation(72, 1, 239, 'uri', '@URI', 'file:outputs/SYNMAP_PRESENTVEG_C4Grass_RelaFrac_NA_v2.0.nc').
+annotation(73, 1, 289, 'end', '@END', 'generate_netcdf_file_for_C4_fraction').
+annotation(74, 1, 294, 'begin', '@BEGIN', 'generate_netcdf_file_for_Grass_fraction').
+annotation(75, 1, 295, 'in', '@in', 'lon_variable').
+annotation(76, 1, 296, 'in', '@in', 'lat_variable').
+annotation(77, 1, 297, 'in', '@in', 'lon_bnds_variable').
+annotation(78, 1, 298, 'in', '@in', 'lat_bnds_variable').
+annotation(79, 1, 299, 'in', '@in', 'Grass_variable').
+annotation(80, 1, 300, 'out', '@out', 'Grass_fraction_data').
+annotation(81, 1, 300, 'uri', '@URI', 'file:outputs/SYNMAP_PRESENTVEG_Grass_Fraction_NA_v2.0.nc').
+annotation(82, 1, 350, 'end', '@END', 'generate_netcdf_file_for_Grass_fraction').
+annotation(83, 1, 352, 'end', '@END', 'C3_C4_map_present_NA').
+
+% FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
+annotation_qualifies(5, 4).
+annotation_qualifies(7, 6).
+annotation_qualifies(9, 8).
+annotation_qualifies(11, 10).
+annotation_qualifies(13, 12).
+annotation_qualifies(15, 14).
+annotation_qualifies(18, 17).
+annotation_qualifies(20, 19).
+annotation_qualifies(22, 21).
+annotation_qualifies(24, 23).
+annotation_qualifies(26, 25).
+annotation_qualifies(30, 29).
+annotation_qualifies(32, 31).
+annotation_qualifies(36, 35).
+annotation_qualifies(38, 37).
+annotation_qualifies(44, 43).
+annotation_qualifies(48, 47).
+annotation_qualifies(50, 49).
+annotation_qualifies(52, 51).
+annotation_qualifies(54, 53).
+annotation_qualifies(63, 62).
+annotation_qualifies(72, 71).
+annotation_qualifies(81, 80).
