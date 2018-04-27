@@ -1,0 +1,8 @@
+,program_name,input_ports,output_ports
+1,get_itrdb_data,"['shapefile_archive', 'study_region', 'prediction_years']","[('itrdb', 'Not in ports list/list')]"
+2,create_shapefile_dir.cwl,"[('dir_name', 'study_region')]",['user_created_dir']
+3,download_shapefile_archive.cwl,"[('file_archive', 'shapefile_archive'), ('dir', 'create_shapefile_dir/user_created_dir')]",['compressed_shapefile']
+4,uncompress_shapefile.cwl,"[('zipfile', 'download_shapefile_archive/compressed_shapefile'), ('dir_name', 'create_shapefile_dir/user_created_dir')]","['shapefiles_dir', 'layer_boundary', 'layer_tracts', 'metadata_xml_file', 'tracts_xml_file']"
+5,read_shapefile.cwl,"[('layer', 'uncompress_shapefile/layer_boundary'), ('dir', 'uncompress_shapefile/shapefiles_dir')]",['dataobject']
+6,get_treepolygon.cwl,"[('width', 'Not in ports list'), ('polygon', 'read_shapefile/dataobject'), ('quadsegs', 'Not in ports list')]",['template']
+7,extract_tree_ring_data.cwl,"[('polygon', 'get_treepolygon/template'), ('label', 'Parameter'), ('raw_dir', 'Parameter'), ('extraction_dir', 'Parameter'), ('prediction_years', 'prediction_years'), ('calib_years', 'Not in ports list'), ('measurement_type', 'Parameter'), ('chronology_type', 'Parameter'), ('force_redo', 'Parameter')]",['list']

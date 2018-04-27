@@ -1,0 +1,109 @@
+port_name          data_id
+-----------------  ----------
+shapefile_archive  1
+study_region       2
+prediction_years   3
+dir_name           5
+file_archive       7
+dir                6
+zipfile            8
+dir_name           6
+layer              10
+dir                9
+width              15
+polygon            14
+quadsegs           16
+polygon            17
+label              18
+raw_dir            19
+extraction_dir     20
+prediction_years   21
+calib_years        22
+measurement_type   23
+chronology_type    24
+force_redo         25
+
+
+port_name          data_id
+-----------------  ----------
+shapefile_archive  1
+study_region       2
+prediction_years   3
+user_created_dir   6
+dir                6
+compressed_shapef  8
+zipfile            8
+dir_name           6
+shapefiles_dir     9
+layer_boundary     10
+layer_tracts       11
+metadata_xml_file  12
+tracts_xml_file    13
+layer              10
+dir                9
+dataobject         14
+polygon            14
+template           17
+polygon            17
+list               26
+
+
+port_name   data_id
+----------  ----------
+dir_name    5
+file_archi  7
+width       15
+quadsegs    16
+label       18
+raw_dir     19
+extraction  20
+prediction  21
+calib_year  22
+measuremen  23
+chronology  24
+force_redo  25
+
+
+port_id     program_name   port_name   qualified_portname  port_type   data_id
+----------  -------------  ----------  ------------------  ----------  ----------
+8           print_message  verbose     verbose             IN          8
+9           get_predictor  itrdb       itrdb               IN          9
+10          get_predictor  calibratio  calibration_years   IN          10
+11          get_predictor  min_width   min_width           IN          11
+14          get_reconstru  itrdb       itrdb               IN          9
+15          get_reconstru  prediction  prediction_years    IN          14
+16          get_reconstru  min_width   min_width           IN          11
+20          get_carscores  prism_data  prism_data_for_coo  IN          17
+23          calculate_Mod  predlist    predlist            IN          16
+24          calculate_Mod  carscores   carscores           IN          18
+25          calculate_Mod  max_preds   max_preds           IN          13
+27          defineLinearM  predlist    predlist            IN          20
+28          defineLinearM  carscores   carscores           IN          21
+29          defineLinearM  max_preds   max_preds           IN          22
+39          optimizeModel  linear_mod  linear_models       IN          19
+
+
+
+port_id     program_name          port_name   qualified_portname              port_type   data_id
+----------  --------------------  ----------  ------------------------------  ----------  ----------
+13          get_predictor_matrix  max_preds   get_predictor_matrix/max_preds  OUT         13
+12          get_predictor_matrix  predictor_  get_predictor_matrix/predictor  OUT         12
+17          get_reconstruction_m  reconstruc  get_reconstruction_matrix/reco  OUT         15
+19          get_predlist          predlist    get_predlist/predlist           OUT         16
+22          get_carscores         carscores   get_carscores/carscores         OUT         18
+26          calculate_Models      linear_mod  calculate_Models/linear_models  OUT         19
+40          optimizeModels        paleocar_m  optimizeModels/paleocar_models  OUT         28
+31          defineLinearModels    matches     defineLinearModels/matches      OUT         24
+30          defineLinearModels    models      defineLinearModels/models       OUT         23
+34          calculateLinearModel  coefficien  calculateLinearModels/coeffici  OUT         25
+35          calculateLinearModel  model_erro  calculateLinearModels/model_er  OUT         26
+38          simplifyLinearModels  final_mode  simplifyLinearModels/final_mod  OUT         27
+
+select 
+	p.data_id  
+from 
+	port p, port_alias pa
+where 
+	p.port_id = pa.port_id
+and p.port_type = 'IN'
+and p.port_name = pa.alias;

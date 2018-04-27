@@ -1,0 +1,11 @@
+,program_name,input_ports,output_ports
+10,simplifyLinearModels,"['coefficients', 'model_errors']",['final_models']
+11,optimizeModels,['linear_models'],['paleocar_models']
+2,print_message,['verbose'],[]
+3,get_predictor_matrix,"['itrdb', 'calibration_years', 'min_width']","['predictor_matrix', 'max_preds']"
+4,get_reconstruction_matrix,"['itrdb', 'prediction_years', 'min_width']",['reconstruction_matrix']
+5,get_predlist,['reconstruction_matrix'],['predlist']
+6,get_carscores,"['prism_data_for_coordinates', 'predictor_matrix']",['carscores']
+7,calculate_Models,"['predlist', 'carscores', 'max_preds']",['linear_models']
+8,defineLinearModels,"['predlist', 'carscores', 'max_preds']","['models', 'matches']"
+9,calculateLinearModels,"['models', 'matches']","['coefficients', 'model_errors']"
