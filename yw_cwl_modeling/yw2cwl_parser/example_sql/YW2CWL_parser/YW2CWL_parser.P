@@ -1,0 +1,267 @@
+
+% FACT: program(program_id, program_name, qualified_program_name, begin_annotation_id, end_annotation_id).
+program(1, 'YW2CWL_parser', 'YW2CWL_parser', 1, 58).
+program(2, 'create_db_conn', 'YW2CWL_parser.create_db_conn', 4, 8).
+program(3, 'create_db_tables', 'YW2CWL_parser.create_db_tables', 9, 12).
+program(4, 'create_yw_db_model', 'YW2CWL_parser.create_yw_db_model', 13, 17).
+program(5, 'create_dataFrames', 'YW2CWL_parser.create_dataFrames', 18, 21).
+program(6, 'create_missing_cwl_ports', 'YW2CWL_parser.create_missing_cwl_ports', 22, 26).
+program(7, 'chk_prog_wo_output_port', 'YW2CWL_parser.chk_prog_wo_output_port', 27, 31).
+program(8, 'check_danglingports', 'YW2CWL_parser.check_danglingports', 32, 36).
+program(9, 'check_multiwriter_prog', 'YW2CWL_parser.check_multiwriter_prog', 37, 41).
+program(10, 'reload_dataFrames', 'YW2CWL_parser.reload_dataFrames', 42, 46).
+program(11, 'create_cwl_file', 'YW2CWL_parser.create_cwl_file', 47, 50).
+program(12, 'create_cwl_wf', 'YW2CWL_parser.create_cwl_wf', 51, 55).
+
+% FACT: workflow(program_id).
+workflow(1).
+
+% FACT: function(program_id).
+
+% FACT: has_subprogram(program_id, subprogram_id).
+has_subprogram(1, 2).
+has_subprogram(1, 3).
+has_subprogram(1, 4).
+has_subprogram(1, 5).
+has_subprogram(1, 6).
+has_subprogram(1, 7).
+has_subprogram(1, 8).
+has_subprogram(1, 9).
+has_subprogram(1, 10).
+has_subprogram(1, 11).
+has_subprogram(1, 12).
+
+% FACT: port(port_id, port_type, port_name, qualified_port_name, port_annotation_id, data_id).
+port(1, 'in', 'yw_model_file', 'YW2CWL_parser<-yw_model_file', 2, 1).
+port(2, 'param', 'base_dir', 'YW2CWL_parser<-base_dir', 3, 2).
+port(28, 'out', 'yw_db_model', 'YW2CWL_parser->yw_db_model', 56, 12).
+port(29, 'out', 'cwl_wf_files', 'YW2CWL_parser->cwl_wf_files', 57, 13).
+port(3, 'in', 'yw_model_file', 'YW2CWL_parser.create_db_conn<-yw_model_file', 5, 3).
+port(4, 'param', 'base_dir', 'YW2CWL_parser.create_db_conn<-base_dir', 6, 4).
+port(5, 'out', 'db_conn', 'YW2CWL_parser.create_db_conn->db_conn', 7, 5).
+port(6, 'in', 'db_conn', 'YW2CWL_parser.create_db_tables<-db_conn', 10, 5).
+port(7, 'out', 'yw_tables', 'YW2CWL_parser.create_db_tables->yw_tables', 11, 6).
+port(8, 'in', 'yw_model_file', 'YW2CWL_parser.create_yw_db_model<-yw_model_file', 14, 3).
+port(9, 'param', 'yw_tables', 'YW2CWL_parser.create_yw_db_model<-yw_tables', 15, 6).
+port(10, 'out', 'yw_db_model', 'YW2CWL_parser.create_yw_db_model->yw_db_model', 16, 7).
+port(11, 'in', 'yw_tables', 'YW2CWL_parser.create_dataFrames<-yw_tables', 19, 6).
+port(12, 'out', 'dataFrames', 'YW2CWL_parser.create_dataFrames->dataFrames', 20, 8).
+port(13, 'in', 'dataFrames', 'YW2CWL_parser.create_missing_cwl_ports<-dataFrames', 23, 8).
+port(14, 'out', 'updated_tables', 'YW2CWL_parser.create_missing_cwl_ports->updated_tables', 24, 7).
+port(15, 'in', 'dataFrames', 'YW2CWL_parser.chk_prog_wo_output_port<-dataFrames', 28, 8).
+port(16, 'out', 'updated_tables', 'YW2CWL_parser.chk_prog_wo_output_port->updated_tables', 29, 7).
+port(17, 'in', 'dataFrames', 'YW2CWL_parser.check_danglingports<-dataFrames', 33, 8).
+port(18, 'out', 'updated_tables', 'YW2CWL_parser.check_danglingports->updated_tables', 34, 7).
+port(19, 'in', 'dataFrames', 'YW2CWL_parser.check_multiwriter_prog<-dataFrames', 38, 8).
+port(20, 'out', 'updated_tables', 'YW2CWL_parser.check_multiwriter_prog->updated_tables', 39, 7).
+port(21, 'in', 'updated_tables', 'YW2CWL_parser.reload_dataFrames<-updated_tables', 43, 7).
+port(22, 'out', 'updated_dataFrames', 'YW2CWL_parser.reload_dataFrames->updated_dataFrames', 45, 9).
+port(23, 'in', 'updated_dataFrames', 'YW2CWL_parser.create_cwl_file<-updated_dataFrames', 48, 9).
+port(24, 'out', 'cwl_files', 'YW2CWL_parser.create_cwl_file->cwl_files', 49, 10).
+port(25, 'in', 'updated_dataFrames', 'YW2CWL_parser.create_cwl_wf<-updated_dataFrames', 52, 9).
+port(26, 'in', 'cwl_files', 'YW2CWL_parser.create_cwl_wf<-cwl_files', 53, 10).
+port(27, 'out', 'cwl_wf_files', 'YW2CWL_parser.create_cwl_wf->cwl_wf_files', 54, 11).
+
+% FACT: port_alias(port_id, alias).
+port_alias(14, 'yw_db_model').
+port_alias(16, 'yw_db_model').
+port_alias(18, 'yw_db_model').
+port_alias(20, 'yw_db_model').
+port_alias(21, 'yw_db_model').
+
+% FACT: port_uri_template(port_id, uri).
+
+% FACT: has_in_port(block_id, port_id).
+has_in_port(1, 1).
+has_in_port(1, 2).
+has_in_port(2, 3).
+has_in_port(2, 4).
+has_in_port(3, 6).
+has_in_port(4, 8).
+has_in_port(4, 9).
+has_in_port(5, 11).
+has_in_port(6, 13).
+has_in_port(7, 15).
+has_in_port(8, 17).
+has_in_port(9, 19).
+has_in_port(10, 21).
+has_in_port(11, 23).
+has_in_port(12, 25).
+has_in_port(12, 26).
+
+% FACT: has_out_port(block_id, port_id).
+has_out_port(1, 28).
+has_out_port(1, 29).
+has_out_port(2, 5).
+has_out_port(3, 7).
+has_out_port(4, 10).
+has_out_port(5, 12).
+has_out_port(6, 14).
+has_out_port(7, 16).
+has_out_port(8, 18).
+has_out_port(9, 20).
+has_out_port(10, 22).
+has_out_port(11, 24).
+has_out_port(12, 27).
+
+% FACT: data(data_id, data_name, qualified_data_name).
+data(1, 'yw_model_file', '[yw_model_file]').
+data(2, 'base_dir', '[base_dir]').
+data(12, 'yw_db_model', '[yw_db_model]').
+data(13, 'cwl_wf_files', '[cwl_wf_files]').
+data(3, 'yw_model_file', 'YW2CWL_parser[yw_model_file]').
+data(4, 'base_dir', 'YW2CWL_parser[base_dir]').
+data(5, 'db_conn', 'YW2CWL_parser[db_conn]').
+data(6, 'yw_tables', 'YW2CWL_parser[yw_tables]').
+data(7, 'yw_db_model', 'YW2CWL_parser[yw_db_model]').
+data(8, 'dataFrames', 'YW2CWL_parser[dataFrames]').
+data(9, 'updated_dataFrames', 'YW2CWL_parser[updated_dataFrames]').
+data(10, 'cwl_files', 'YW2CWL_parser[cwl_files]').
+data(11, 'cwl_wf_files', 'YW2CWL_parser[cwl_wf_files]').
+
+% FACT: channel(channel_id, data_id).
+channel(1, 3).
+channel(2, 3).
+channel(3, 4).
+channel(4, 5).
+channel(5, 6).
+channel(6, 6).
+channel(7, 8).
+channel(8, 8).
+channel(9, 8).
+channel(10, 8).
+channel(11, 7).
+channel(12, 12).
+channel(13, 9).
+channel(14, 9).
+channel(15, 10).
+channel(16, 13).
+channel(17, 1).
+channel(18, 1).
+channel(19, 2).
+channel(20, 7).
+channel(21, 11).
+
+% FACT: port_connects_to_channel(port_id, channel_id).
+port_connects_to_channel(3, 1).
+port_connects_to_channel(8, 2).
+port_connects_to_channel(4, 3).
+port_connects_to_channel(5, 4).
+port_connects_to_channel(6, 4).
+port_connects_to_channel(7, 5).
+port_connects_to_channel(9, 5).
+port_connects_to_channel(7, 6).
+port_connects_to_channel(11, 6).
+port_connects_to_channel(12, 7).
+port_connects_to_channel(13, 7).
+port_connects_to_channel(12, 8).
+port_connects_to_channel(15, 8).
+port_connects_to_channel(12, 9).
+port_connects_to_channel(17, 9).
+port_connects_to_channel(12, 10).
+port_connects_to_channel(19, 10).
+port_connects_to_channel(20, 11).
+port_connects_to_channel(21, 11).
+port_connects_to_channel(20, 12).
+port_connects_to_channel(22, 13).
+port_connects_to_channel(23, 13).
+port_connects_to_channel(22, 14).
+port_connects_to_channel(25, 14).
+port_connects_to_channel(24, 15).
+port_connects_to_channel(26, 15).
+port_connects_to_channel(27, 16).
+port_connects_to_channel(3, 17).
+port_connects_to_channel(8, 18).
+port_connects_to_channel(4, 19).
+port_connects_to_channel(20, 20).
+port_connects_to_channel(27, 21).
+
+% FACT: inflow_connects_to_channel(port_id, channel_id).
+inflow_connects_to_channel(1, 1).
+inflow_connects_to_channel(1, 2).
+inflow_connects_to_channel(2, 3).
+inflow_connects_to_channel(1, 17).
+inflow_connects_to_channel(1, 18).
+inflow_connects_to_channel(2, 19).
+
+% FACT: outflow_connects_to_channel(port_id, channel_id).
+outflow_connects_to_channel(28, 12).
+outflow_connects_to_channel(29, 16).
+outflow_connects_to_channel(28, 20).
+outflow_connects_to_channel(29, 21).
+
+% FACT: uri_variable(uri_variable_id, variable_name, port_id).
+
+% FACT: log_template(log_template_id, port_id, entry_template, log_annotation_id).
+
+% FACT: log_template_variable(log_variable_id, variable_name, log_template_id).
+
+% FACT: extract_source(source_id, source_path).
+extract_source(1, '').
+
+% FACT: annotation(annotation_id, source_id, line_number, tag, keyword, value).
+annotation(1, 1, 1017, 'begin', '@begin', 'YW2CWL_parser').
+annotation(2, 1, 1018, 'in', '@in', 'yw_model_file').
+annotation(3, 1, 1019, 'param', '@param', 'base_dir').
+annotation(4, 1, 1022, 'begin', '@begin', 'create_db_conn').
+annotation(5, 1, 1023, 'in', '@in', 'yw_model_file').
+annotation(6, 1, 1024, 'param', '@param', 'base_dir').
+annotation(7, 1, 1032, 'out', '@out', 'db_conn').
+annotation(8, 1, 1033, 'end', '@end', 'create_db_conn').
+annotation(9, 1, 1035, 'begin', '@begin', 'create_db_tables').
+annotation(10, 1, 1036, 'in', '@in', 'db_conn').
+annotation(11, 1, 1039, 'out', '@out', 'yw_tables').
+annotation(12, 1, 1040, 'end', '@end', 'create_db_tables').
+annotation(13, 1, 1043, 'begin', '@begin', 'create_yw_db_model').
+annotation(14, 1, 1044, 'in', '@in', 'yw_model_file').
+annotation(15, 1, 1045, 'param', '@param', 'yw_tables').
+annotation(16, 1, 1050, 'out', '@out', 'yw_db_model').
+annotation(17, 1, 1051, 'end', '@end', 'create_yw_db_model').
+annotation(18, 1, 1054, 'begin', '@begin', 'create_dataFrames').
+annotation(19, 1, 1055, 'in', '@in', 'yw_tables').
+annotation(20, 1, 1060, 'out', '@out', 'dataFrames').
+annotation(21, 1, 1061, 'end', '@end', 'create_dataFrames').
+annotation(22, 1, 1063, 'begin', '@begin', 'create_missing_cwl_ports').
+annotation(23, 1, 1064, 'in', '@in', 'dataFrames').
+annotation(24, 1, 1070, 'out', '@out', 'updated_tables').
+annotation(25, 1, 1070, 'as', '@as', 'yw_db_model').
+annotation(26, 1, 1071, 'end', '@end', 'create_missing_cwl_ports').
+annotation(27, 1, 1073, 'begin', '@begin', 'chk_prog_wo_output_port').
+annotation(28, 1, 1074, 'in', '@in', 'dataFrames').
+annotation(29, 1, 1080, 'out', '@out', 'updated_tables').
+annotation(30, 1, 1080, 'as', '@as', 'yw_db_model').
+annotation(31, 1, 1081, 'end', '@end', 'chk_prog_wo_output_port').
+annotation(32, 1, 1083, 'begin', '@begin', 'check_danglingports').
+annotation(33, 1, 1084, 'in', '@in', 'dataFrames').
+annotation(34, 1, 1089, 'out', '@out', 'updated_tables').
+annotation(35, 1, 1089, 'as', '@as', 'yw_db_model').
+annotation(36, 1, 1090, 'end', '@end', 'check_danglingports').
+annotation(37, 1, 1094, 'begin', '@begin', 'check_multiwriter_prog').
+annotation(38, 1, 1095, 'in', '@in', 'dataFrames').
+annotation(39, 1, 1100, 'out', '@out', 'updated_tables').
+annotation(40, 1, 1100, 'as', '@as', 'yw_db_model').
+annotation(41, 1, 1101, 'end', '@end', 'check_multiwriter_prog').
+annotation(42, 1, 1105, 'begin', '@begin', 'reload_dataFrames').
+annotation(43, 1, 1106, 'in', '@in', 'updated_tables').
+annotation(44, 1, 1106, 'as', '@as', 'yw_db_model').
+annotation(45, 1, 1113, 'out', '@out', 'updated_dataFrames').
+annotation(46, 1, 1114, 'end', '@end', 'reload_dataFrames').
+annotation(47, 1, 1117, 'begin', '@begin', 'create_cwl_file').
+annotation(48, 1, 1118, 'in', '@in', 'updated_dataFrames').
+annotation(49, 1, 1132, 'out', '@out', 'cwl_files').
+annotation(50, 1, 1133, 'end', '@end', 'create_cwl_file').
+annotation(51, 1, 1135, 'begin', '@begin', 'create_cwl_wf').
+annotation(52, 1, 1136, 'in', '@in', 'updated_dataFrames').
+annotation(53, 1, 1137, 'in', '@in', 'cwl_files').
+annotation(54, 1, 1145, 'out', '@out', 'cwl_wf_files').
+annotation(55, 1, 1146, 'end', '@end', 'create_cwl_wf').
+annotation(56, 1, 1149, 'out', '@out', 'yw_db_model').
+annotation(57, 1, 1150, 'out', '@out', 'cwl_wf_files').
+annotation(58, 1, 1153, 'end', '@end', 'YW2CWL_parser').
+
+% FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
+annotation_qualifies(25, 24).
+annotation_qualifies(30, 29).
+annotation_qualifies(35, 34).
+annotation_qualifies(40, 39).
+annotation_qualifies(44, 43).

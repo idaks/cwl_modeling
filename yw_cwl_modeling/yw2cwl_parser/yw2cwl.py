@@ -983,6 +983,7 @@ def ins_yw_prog_ports(new_program_id, port_id,port_name, qual_prog_name, data_id
 
 
 def check_multiwriter_prog():
+	
 	if df_multiwriter_port.shape[0] > 1: 
 		wf_id = df_multiwriter_port['workflow_id'].values[0]
 		data_id = df_multiwriter_port['data_id'].values[0]
@@ -1067,47 +1068,55 @@ print("Check for the program without input ports and create the entries in the p
 chk_prog_wo_input_port()
 print_footer()
 
+#@out updated_tables 
+#@end create_missing_cwl_ports
 
-
+#@begin chk_prog_wo_output_port
+#@in dataFrames
 print("+" * 100)
 print("Check for the program without output ports and create the entries in the port and respective realtions. ")
 chk_prog_wo_output_port()
 print_footer()
 
+#@out updated_tables
+#@end chk_prog_wo_output_port
+
+#@begin check_danglingports
+#@in dataFrames
 print("+" * 100)
 print("Check for the dangling ports and create the entries in the port and respective realtions. ")
 check_danglingports()
 print_footer()
+#@out updated_tables
+#@end check_danglingports
 
-#@out yw_tables
-#@end create_missing_cwl_ports
 
 
-#@begin create_yw_program
+#@begin check_multiwriter_prog
 #@in dataFrames
 print("+" * 100)
 print("Check for the output port written by multiple programs. ")
 check_multiwriter_prog()
 print_footer()
-#@out yw_tables
-#@end create_missing_cwl_ports
+#@out updated_tables 
+#@end check_multiwriter_prog
 
 
 
 #@begin reload_dataFrames
-#@in yw_tables 
+#@in updated_tables 
 print("+" * 100)
 print("Reload the dataframes as data in tables have changed. ")
 cwl_file_df, wf_port_df, df_dangling_ports, df_port_alias, qual_portname ,qual_wf_out_port, df_multiwriter_port ,df_data = reload_dataframe()
 print(cwl_file_df.shape)
 print_footer()
 
-#@out dataFrames 
+#@out updated_dataFrames 
 #@end reload_dataFrames 
 
 
 #@begin create_cwl_file
-#@in dataFrames
+#@in updated_dataFrames
 print("+" * 100)
 print("create list of workflow_id and program_id")
 wf_id = cwl_file_df['workflow_id'].unique()
@@ -1125,7 +1134,7 @@ print_footer()
 #@end create_cwl_file
 
 #@begin create_cwl_wf
-#@in dataFrames 
+#@in updated_dataFrames 
 #@in cwl_files 
 
 print("+" * 100)
