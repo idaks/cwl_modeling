@@ -787,7 +787,7 @@ def get_wf_steps(workflow_id):
                 
                 if len(qn_df) == 0 :
                     alias = df_port_alias[df_port_alias["port_id"]==port_id]['alias']
-                    wf_in_port = wf_port_df[wf_port_df["port_name"] ==port_name].values[0] 
+                    wf_in_port = wf_port_df[wf_port_df["port_name"] ==port_name]
                     if len(wf_in_port) != 0:
                         qname = port_name                   
                     elif len(alias) != 0 :
